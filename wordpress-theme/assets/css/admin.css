@@ -1,0 +1,26 @@
+/* AELYRA × OXYNE Z — styles du tableau de bord admin (chargés uniquement
+   sur les pages du menu « Aelyra »). Charte « D'ici » adaptée à l'admin. */
+
+.axz-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0 28px;max-width:1200px}
+@media(max-width:1100px){.axz-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.axz-stats{grid-template-columns:1fr}}
+.axz-stat{
+  background:#FBF8F1;border:1px solid #E4DCCB;border-radius:14px;padding:20px 22px;
+  box-shadow:0 10px 24px -18px rgba(28,26,23,.35);
+}
+.axz-stat .s-tag{font-size:11px;letter-spacing:.14em;font-weight:700;color:#A45327}
+.axz-stat .s-val{font-family:Georgia,serif;font-size:34px;font-weight:700;color:#1C1A17;margin-top:6px;line-height:1}
+.axz-stat .s-sub{font-size:13px;color:#6B6459;margin-top:5px}
+.axz-badge{
+  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+  border-radius:99px;padding:3px 11px;white-space:nowrap;
+}
+.axz-badge.essai{background:#F6E7D7;color:#A45327}
+.axz-badge.actif{background:#E4EEDB;color:#3E5C2E}
+.axz-badge.suspendu{background:#F7DDD6;color:#8F2F24}
+.axz-note{
+  background:#FBF8F1;border:1px dashed #C96F3F;border-radius:12px;
+  padding:14px 18px;max-width:1200px;margin:18px 0;font-size:13.5px;color:#4A443C;
+}
+.axz-rowform{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.axz-rowform select{max-width:150px}
