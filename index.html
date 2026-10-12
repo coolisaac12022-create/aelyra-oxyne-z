@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AELYRA × OXYNE Z — La réceptionniste des entreprises · DIGITALE BUSINESSE</title>
+<meta name="description" content="Aelyra répond aux clients de votre entreprise sur WhatsApp, Oxyne Z protège votre nom contre les usurpations. Une équipe de deux agents, signée DIGITALE BUSINESSE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,480&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ==================================================================
+   AELYRA × OXYNE Z — VERSION PUBLIQUE
+   Tout le CSS est encapsulé sous la classe racine .axz :
+   aucun sélecteur global nu, prêt à vivre dans un thème WordPress.
+   Charte « D'ici » : terracotta / crème / encre, Fraunces + Archivo.
+   Oxyne Z : fond nuit chaud, accent cyan #3FC1C9, rouge = alertes.
+   ================================================================== */
+.axz{
+  --cream:#F5EFE6;
+  --paper:#FBF8F1;
+  --ink:#1C1A17;
+  --ink-soft:#4A443C;
+  --terra:#C96F3F;
+  --terra-deep:#A45327;
+  --line:rgba(28,26,23,.14);
+  --line-soft:rgba(28,26,23,.08);
+  --night:#16120E;
+  --night-2:#201913;
+  --night-line:rgba(245,239,230,.16);
+  --night-txt:rgba(245,239,230,.82);
+  --cyan:#3FC1C9;
+  --alert:#D05545;
+  --ok:#7BA05B;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Archivo",Helvetica,Arial,sans-serif;
+  --sec-py:clamp(84px,11vw,132px);
+  --gap:24px;
+  --gap-lg:56px;
+  --radius:18px;
+  --ease:cubic-bezier(.22,.9,.28,1);
+  font-family:var(--sans);
+  background:var(--cream);
+  color:var(--ink);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+.axz *, .axz *::before, .axz *::after{box-sizing:border-box}
+.axz h1,.axz h2,.axz h3,.axz h4,.axz h5,.axz p,.axz ul,.axz ol,.axz figure{margin:0;padding:0}
+.axz ::selection{background:var(--terra);color:var(--paper)}
+.axz .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+.axz h1,.axz h2,.axz h3,.axz h4{font-family:var(--serif);font-weight:560;line-height:1.06;text-wrap:balance;letter-spacing:-.01em}
+.axz p{text-wrap:pretty}
+.axz a{color:inherit}
+.axz button{font-family:inherit}
+
+/* grain papier — grand écran uniquement, pour épargner les petits téléphones */
+@media (min-width:1024px){
+  .axz::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ============ NAV ============ */
+.axz .progress{position:fixed;top:0;left:0;height:3px;background:var(--terra);width:0;z-index:1100}
+.axz .nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  backdrop-filter:blur(10px);background:rgba(245,239,230,.88);
+  border-bottom:1px solid var(--line-soft);
+}
+.axz .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.axz .brand{font-size:12px;letter-spacing:.14em;font-weight:700;white-space:nowrap}
+.axz .brand b{color:var(--terra-deep)}
+.axz .navlinks{display:flex;gap:26px;font-size:13.5px;font-weight:600}
+.axz .navlinks a{text-decoration:none;opacity:.75;transition:opacity .25s}
+.axz .navlinks a:hover{opacity:1;color:var(--terra-deep)}
+.axz .btn-nav{padding:10px 20px;font-size:14px}
+.axz .burger{
+  display:none;background:none;border:0;cursor:pointer;padding:10px;
+  flex-direction:column;gap:5px;flex:none;
+}
+.axz .burger span{display:block;width:24px;height:2.5px;background:var(--ink);border-radius:2px;transition:transform .3s var(--ease),opacity .3s}
+.axz .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.axz .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.axz .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+@media(max-width:760px){
+  .axz .burger{display:flex}
+  .axz .btn.btn-nav{display:none}
+  .axz .navlinks{
+    position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;gap:0;
+    background:var(--paper);border-bottom:1px solid var(--line);
+    padding:8px clamp(20px,4vw,40px) 14px;
+  }
+  .axz .navlinks.open{display:flex}
+  .axz .navlinks a{padding:12px 2px;font-size:16px;opacity:.9;border-top:1px solid var(--line-soft)}
+  .axz .navlinks a:first-child{border-top:none}
+}
+
+/* ============ BOUTONS ============ */
+.axz .btn{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:15.5px;
+  padding:14px 26px;border-radius:99px;transition:transform .25s var(--ease),box-shadow .25s,background .25s;
+}
+.axz .btn:active{transform:scale(.97)}
+.axz .btn-solid{background:var(--ink);color:var(--paper)}
+.axz .btn-solid:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(28,26,23,.45)}
+.axz .btn-terra{background:var(--terra);color:#fff}
+.axz .btn-terra:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(164,83,39,.55)}
+.axz .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.axz .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* ============ HERO ============ */
+.axz .hero{padding:calc(62px + clamp(56px,9vw,110px)) 0 clamp(60px,8vw,96px);position:relative}
+.axz .eyebrow{
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;
+  background:rgba(201,111,63,.12);color:var(--terra-deep);border-radius:99px;padding:7px 14px;font-weight:700;
+}
+.axz .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--terra);animation:axz-pulse 2.2s infinite}
+@keyframes axz-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.55}}
+.axz .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--gap-lg);align-items:center;margin-top:34px}
+@media(max-width:900px){.axz .hero-grid{grid-template-columns:1fr}}
+.axz .hero h1{font-size:clamp(52px,8.4vw,108px);font-weight:640}
+.axz .hero h1 em{font-style:italic;font-weight:480;color:var(--terra-deep)}
+.axz .hero .lede{font-size:clamp(18px,2vw,21px);color:var(--ink-soft);max-width:52ch;margin-top:26px}
+.axz .hero .lede strong{color:var(--ink)}
+.axz .hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.axz .hero-note{font-size:14px;color:var(--ink-soft);margin-top:16px}
+.axz .hero-stats{display:flex;gap:38px;margin-top:52px;flex-wrap:wrap}
+.axz .stat .num{font-family:var(--serif);font-size:40px;font-weight:640;line-height:1}
+.axz .stat .num i{font-style:normal;color:var(--terra)}
+.axz .stat .lbl{font-size:13px;color:var(--ink-soft);margin-top:6px;max-width:19ch}
+
+/* la marque : l'onde-sourire qui se dessine */
+.axz .mark-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  padding:34px 30px;box-shadow:0 30px 60px -30px rgba(28,26,23,.25);
+}
+.axz .mark-card .wordmark{font-family:var(--serif);font-size:44px;font-weight:640;letter-spacing:.06em;margin-top:18px}
+.axz .mark-card .tagline{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--terra-deep);margin-top:4px}
+.axz .mark-card .micro{font-size:12px;letter-spacing:.12em;color:var(--ink-soft);margin-top:20px;border-top:1px dashed var(--line);padding-top:16px;line-height:2;font-weight:600}
+.axz .wavepath{stroke-dasharray:340;stroke-dashoffset:340;animation:axz-draw 2.4s var(--ease) .3s forwards}
+@keyframes axz-draw{to{stroke-dashoffset:0}}
+.axz .wavedot{opacity:0;animation:axz-fadein .6s ease 2.2s forwards}
+@keyframes axz-fadein{to{opacity:1}}
+
+/* ============ MARQUEE ============ */
+.axz .marquee{background:var(--ink);color:var(--cream);overflow:hidden;padding:15px 0;transform:rotate(-1.1deg) scale(1.02)}
+.axz .marquee-track{display:flex;gap:0;width:max-content;animation:axz-mq 30s linear infinite}
+.axz .marquee span{font-family:var(--serif);font-size:19px;letter-spacing:.04em;padding:0 26px;white-space:nowrap}
+.axz .marquee span i{font-style:normal;color:var(--terra)}
+@keyframes axz-mq{to{transform:translateX(-50%)}}
+
+/* ============ SECTIONS COMMUNES ============ */
+.axz section{padding:var(--sec-py) 0}
+.axz section[id],.axz footer[id]{scroll-margin-top:76px}
+.axz .sec-head{max-width:720px;margin-bottom:52px}
+.axz .sec-num{font-size:12px;letter-spacing:.18em;color:var(--terra-deep);font-weight:700}
+.axz .sec-head h2{font-size:clamp(34px,4.6vw,54px);margin-top:14px}
+.axz .sec-head h2 em{font-style:italic;font-weight:480;color:var(--terra-deep)}
+.axz .sec-head p{color:var(--ink-soft);margin-top:16px;font-size:18px}
+/* Révélations : le contenu est VISIBLE par défaut. Le JS ajoute .rv-init
+   (état caché) seulement s'il tourne — si le JS échoue, rien n'est masqué. */
+.axz .rv-init{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.axz .rv-init.in{opacity:1;transform:none}
+.axz .rv-d1{transition-delay:.08s}.axz .rv-d2{transition-delay:.16s}.axz .rv-d3{transition-delay:.24s}.axz .rv-d4{transition-delay:.32s}
+
+/* ============ LE PRINCIPE : DEUX AGENTS ============ */
+.axz .duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+@media(max-width:860px){.axz .duo{grid-template-columns:1fr}}
+.axz .agent-card{border-radius:var(--radius);padding:38px 34px;position:relative;overflow:hidden;transition:transform .35s var(--ease)}
+.axz .agent-card:hover{transform:translateY(-6px)}
+.axz .agent-card .env-tag{font-size:12px;letter-spacing:.16em;font-weight:700}
+.axz .agent-card h3{font-size:clamp(30px,3.4vw,42px);margin-top:14px}
+.axz .agent-card .role{font-family:var(--serif);font-style:italic;font-size:19px;margin-top:4px}
+.axz .agent-card p{margin-top:16px;font-size:16px}
+.axz .agent-card ul{list-style:none;margin-top:20px;display:grid;gap:9px;font-size:15px}
+.axz .agent-card li{display:flex;gap:10px;align-items:baseline}
+.axz .agent-card li::before{content:"—";opacity:.5}
+.axz .card-aelyra{background:var(--paper);border:1px solid var(--line);box-shadow:0 24px 48px -28px rgba(28,26,23,.28)}
+.axz .card-aelyra .env-tag{color:var(--terra-deep)}
+.axz .card-aelyra .role{color:var(--terra-deep)}
+.axz .card-oxyne{background:var(--night);color:var(--cream)}
+.axz .card-oxyne .env-tag{color:var(--cyan)}
+.axz .card-oxyne .role{color:var(--cyan)}
+.axz .card-oxyne p,.axz .card-oxyne li{color:var(--night-txt)}
+.axz .premium-chip{position:absolute;top:22px;right:22px;font-size:12px;letter-spacing:.14em;background:var(--cyan);color:var(--night);font-weight:700;border-radius:99px;padding:5px 11px}
+.axz .principle-note{
+  margin-top:var(--gap);border:1.5px dashed var(--terra);border-radius:var(--radius);
+  padding:26px 30px;font-family:var(--serif);font-size:clamp(19px,2.2vw,23px);line-height:1.5;background:rgba(201,111,63,.06);
+}
+.axz .principle-note b{color:var(--terra-deep)}
+</style>
+</head>
+<body style="margin:0">
+<div class="axz">
+<style>
+/* ============ ENVIRONNEMENT AELYRA ============ */
+.axz .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap-lg);align-items:start}
+@media(max-width:940px){.axz .split{grid-template-columns:1fr}}
+.axz .rules{display:grid;gap:0;margin-top:8px}
+.axz .rule{display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line-soft)}
+.axz .rule:first-child{border-top:none;padding-top:4px}
+.axz .rule .n{font-weight:700;color:var(--terra);font-size:14px;padding-top:3px;letter-spacing:.06em}
+.axz .rule h4{font-size:20px}
+.axz .rule p{color:var(--ink-soft);font-size:15.5px;margin-top:3px}
+
+/* téléphone / conversation animée */
+.axz .phone{
+  background:#0E0C0A;border-radius:38px;padding:12px;max-width:400px;margin:0 auto;
+  box-shadow:0 40px 80px -32px rgba(28,26,23,.5);
+}
+.axz .phone-screen{background:#E9E2D2;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;height:600px}
+.axz .chat-head{background:#17594B;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:11px}
+.axz .chat-head .avatar{width:38px;height:38px;border-radius:50%;background:var(--terra);display:grid;place-items:center;font-family:var(--serif);font-weight:640;font-size:18px;color:#fff;flex:none}
+.axz .chat-head .who{line-height:1.25}
+.axz .chat-head .who b{font-size:15px;display:block}
+.axz .chat-head .who span{font-size:12px;opacity:.9}
+.axz .chat-body{flex:1;padding:16px 13px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.axz .msg{max-width:82%;padding:9px 12px;border-radius:12px;font-size:14px;line-height:1.5;opacity:0;transform:translateY(12px) scale(.97);transition:opacity .45s var(--ease),transform .45s var(--ease);position:relative;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.axz .msg.show{opacity:1;transform:none}
+.axz .msg.in{background:#fff;align-self:flex-start;border-top-left-radius:3px}
+.axz .msg.out{background:#D7F5C8;align-self:flex-end;border-top-right-radius:3px}
+.axz .msg .meta{display:flex;gap:7px;align-items:center;margin-bottom:5px;flex-wrap:wrap}
+.axz .prio{font-size:12px;font-weight:700;letter-spacing:.06em;border-radius:99px;padding:2.5px 8px}
+.axz .prio.hot{background:#B3402A;color:#fff}
+.axz .prio.wait{background:#8A8172;color:#fff}
+.axz .prio.info{background:rgba(23,89,75,.14);color:#17594B}
+.axz .msg .from{font-size:12px;font-weight:700;color:#17594B}
+.axz .msg .time{display:block;text-align:right;font-size:12px;color:rgba(0,0,0,.5);margin-top:3px}
+.axz .typing{align-self:flex-start;background:#fff;border-radius:12px;padding:11px 14px;display:none;gap:5px;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.axz .typing.on{display:flex}
+.axz .typing i{width:7px;height:7px;border-radius:50%;background:#9a917f;animation:axz-tp 1s infinite}
+.axz .typing i:nth-child(2){animation-delay:.15s}.axz .typing i:nth-child(3){animation-delay:.3s}
+@keyframes axz-tp{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
+.axz .chat-foot{padding:11px 13px;background:#F0EBDD;display:flex;gap:9px;align-items:center}
+.axz .chat-foot .fake-input{flex:1;background:#fff;border-radius:99px;padding:9px 15px;font-size:13px;color:#8A8172}
+.axz .chat-foot .send{width:38px;height:38px;border-radius:50%;background:#1FA855;display:grid;place-items:center;color:#fff;font-size:15px;flex:none}
+.axz .chat-caption{text-align:center;font-size:12px;letter-spacing:.08em;color:var(--ink-soft);margin-top:16px;font-weight:600;line-height:1.7}
+
+/* ============ COMMENT ÇA MARCHE ============ */
+.axz .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+@media(max-width:860px){.axz .steps{grid-template-columns:1fr}}
+.axz .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;transition:transform .35s var(--ease)}
+.axz .step:hover{transform:translateY(-6px)}
+.axz .step .s-n{font-family:var(--serif);font-size:46px;font-weight:640;color:var(--terra);line-height:1}
+.axz .step h4{font-size:21px;margin-top:14px}
+.axz .step p{color:var(--ink-soft);font-size:15.5px;margin-top:7px}
+
+/* ============ LA VUE DU PATRON ============ */
+.axz .report-card{
+  background:#E9E2D2;border-radius:24px;padding:14px;max-width:440px;margin:0 auto;
+  box-shadow:0 34px 64px -30px rgba(28,26,23,.4);
+}
+.axz .report-head{background:#17594B;color:#fff;border-radius:16px 16px 6px 6px;padding:13px 16px;display:flex;align-items:center;gap:11px}
+.axz .report-head .avatar{width:36px;height:36px;border-radius:50%;background:var(--terra);display:grid;place-items:center;font-family:var(--serif);font-weight:640;font-size:16px;color:#fff;flex:none}
+.axz .report-head .who{line-height:1.25}
+.axz .report-head .who b{font-size:14.5px;display:block}
+.axz .report-head .who span{font-size:12px;opacity:.9}
+.axz .report-msg{background:#fff;border-radius:6px 14px 14px 14px;padding:15px 16px;margin-top:10px;font-size:14.5px;line-height:1.6;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.axz .report-msg h5{font-family:var(--serif);font-size:17px;font-weight:560;margin-bottom:8px}
+.axz .report-msg ul{list-style:none;display:grid;gap:7px}
+.axz .report-msg li{display:flex;gap:9px;align-items:baseline}
+.axz .report-msg li::before{content:"—";color:var(--terra);font-weight:700}
+.axz .report-msg .r-time{display:block;text-align:right;font-size:12px;color:rgba(0,0,0,.5);margin-top:8px}
+.axz .patron-list{display:grid;gap:0}
+.axz .patron-list .rule p{max-width:46ch}
+
+/* ============ ENVIRONNEMENT OXYNE Z (nuit, accent cyan) ============ */
+.axz .env-oxyne{background:var(--night);color:var(--cream);position:relative;overflow:hidden}
+.axz .env-oxyne .sec-num{color:var(--cyan)}
+.axz .env-oxyne .sec-head h2 em{color:var(--cyan)}
+.axz .env-oxyne .sec-head p{color:var(--night-txt)}
+.axz .soc-panel{
+  background:var(--night-2);border:1px solid var(--night-line);border-radius:var(--radius);
+  padding:30px clamp(20px,3vw,34px);position:relative;overflow:hidden;
+}
+.axz .radar{
+  position:absolute;top:-70px;right:-70px;width:270px;height:270px;border-radius:50%;
+  border:1px solid rgba(63,193,201,.28);pointer-events:none;
+}
+.axz .radar::before{content:"";position:absolute;inset:32px;border-radius:50%;border:1px solid rgba(63,193,201,.18)}
+.axz .radar::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(63,193,201,.35),transparent 22%);
+  animation:axz-sweep 5.5s linear infinite;
+}
+@keyframes axz-sweep{to{transform:rotate(360deg)}}
+.axz .soc-status{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;color:var(--cyan);font-weight:700}
+.axz .soc-status .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:axz-pulse 1.8s infinite}
+.axz .alert{
+  border:1px solid var(--night-line);border-left:4px solid var(--cyan);border-radius:12px;
+  padding:18px 20px;margin-top:18px;background:rgba(245,239,230,.03);position:relative;z-index:1;
+}
+.axz .alert.red{border-left-color:var(--alert)}
+.axz .alert.ok{border-left-color:var(--ok)}
+.axz .alert h5{font-family:var(--serif);font-size:19px;font-weight:560;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.axz .alert p{color:var(--night-txt);font-size:14.5px;margin-top:5px}
+.axz .alert .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.axz .chip{font-size:12px;letter-spacing:.04em;border:1px solid var(--night-line);border-radius:99px;padding:5px 11px;color:var(--night-txt)}
+.axz .chip.done{border-color:rgba(123,160,91,.65);color:#B7D09A}
+.axz .chip b{color:var(--cyan);font-weight:700}
+.axz .pending{
+  margin-top:14px;border:1.5px dashed rgba(63,193,201,.55);border-radius:12px;
+  padding:13px 15px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:rgba(63,193,201,.05);
+}
+.axz .pending .p-txt{font-size:14.5px;font-weight:600;color:var(--cream)}
+.axz .pending .p-txt span{color:var(--cyan)}
+.axz .btn-mini{
+  font-size:13.5px;font-weight:700;border-radius:99px;padding:8px 18px;cursor:pointer;
+  border:1.5px solid var(--cyan);transition:transform .2s var(--ease),background .2s;
+}
+.axz .btn-mini:active{transform:scale(.96)}
+.axz .btn-mini.go{background:var(--cyan);color:var(--night)}
+.axz .btn-mini.go:hover{background:#5BD0D8}
+.axz .btn-mini.no{background:transparent;color:var(--night-txt)}
+.axz .btn-mini.no:hover{border-color:var(--night-txt);color:var(--cream)}
+.axz .soc-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:var(--gap)}
+@media(max-width:860px){.axz .soc-rules{grid-template-columns:1fr}}
+.axz .soc-rule{border:1px solid var(--night-line);border-radius:var(--radius);padding:24px}
+.axz .soc-rule h4{font-size:20px;color:var(--cream)}
+.axz .soc-rule h4 span{color:var(--cyan)}
+.axz .soc-rule p{color:var(--night-txt);font-size:15px;margin-top:7px}
+
+/* ============ ENVIRONNEMENTS COMMERÇANTS ============ */
+.axz .merchants{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+@media(max-width:940px){.axz .merchants{grid-template-columns:1fr}}
+.axz .merchant{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px;
+  transition:transform .35s var(--ease),box-shadow .35s;
+}
+.axz .merchant:hover{transform:translateY(-6px);box-shadow:0 26px 50px -26px rgba(28,26,23,.3)}
+.axz .merchant .m-head{display:flex;align-items:center;gap:13px}
+.axz .merchant .m-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:21px;flex:none}
+.axz .m1 .m-ico{background:rgba(201,111,63,.15)}
+.axz .m2 .m-ico{background:rgba(23,89,75,.12)}
+.axz .m3 .m-ico{background:rgba(63,193,201,.16)}
+.axz .merchant h4{font-size:21px;line-height:1.2}
+.axz .merchant .m-type{font-size:12px;letter-spacing:.13em;color:var(--ink-soft);font-weight:600}
+.axz .merchant .m-env{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:grid;gap:8px;font-size:14.5px;color:var(--ink-soft)}
+.axz .merchant .m-env b{color:var(--ink);font-weight:600}
+.axz .merchant .m-chat{margin-top:16px;background:var(--cream);border-radius:12px;padding:13px 14px;font-size:13.5px;line-height:1.55}
+.axz .merchant .m-chat .q{color:var(--ink-soft);font-style:italic}
+.axz .merchant .m-chat .a{margin-top:6px}
+.axz .walls{
+  margin-top:var(--gap);display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap;
+  font-size:12.5px;letter-spacing:.08em;color:var(--ink-soft);text-align:center;font-weight:600;
+}
+.axz .walls .lock{border:1px solid var(--terra);color:var(--terra-deep);border-radius:99px;padding:7px 14px;font-weight:700;background:rgba(201,111,63,.07)}
+
+/* ============ TARIFS ============ */
+.axz .trial-banner{
+  border:1.5px dashed var(--terra);background:rgba(201,111,63,.06);border-radius:var(--radius);
+  padding:28px clamp(22px,3.5vw,38px);display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+}
+.axz .trial-banner h3{font-size:clamp(24px,3vw,32px)}
+.axz .trial-banner h3 em{font-style:italic;font-weight:480;color:var(--terra-deep)}
+.axz .trial-banner p{color:var(--ink-soft);font-size:15.5px;margin-top:5px;max-width:52ch}
+.axz .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:var(--gap);align-items:stretch}
+@media(max-width:940px){.axz .plans{grid-template-columns:1fr}}
+.axz .plan{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:30px 27px;display:flex;flex-direction:column;position:relative}
+.axz .plan .p-tag{font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--terra-deep)}
+.axz .plan h4{font-size:26px;margin-top:10px}
+.axz .plan .p-sub{font-size:14.5px;color:var(--ink-soft);margin-top:4px}
+.axz .plan ul{list-style:none;margin-top:20px;display:grid;gap:10px;font-size:15px}
+.axz .plan li{display:flex;gap:10px;align-items:baseline}
+.axz .plan li::before{content:"✓";color:var(--terra);font-weight:700}
+.axz .plan .price{margin-top:auto;padding-top:26px}
+.axz .plan .price .amount{font-family:var(--serif);font-size:32px;font-weight:640}
+.axz .plan .price .when{font-size:13px;color:var(--ink-soft);display:block;margin-top:2px}
+.axz .plan.featured{background:var(--night);color:var(--cream);border-color:var(--night);box-shadow:0 30px 60px -30px rgba(22,18,14,.55)}
+.axz .plan.featured .p-tag{color:var(--cyan)}
+.axz .plan.featured .p-sub{color:var(--night-txt)}
+.axz .plan.featured li::before{content:"✓";color:var(--cyan)}
+.axz .plan.featured .price .when{color:var(--night-txt)}
+.axz .premium-chip2{position:absolute;top:22px;right:22px;font-size:12px;letter-spacing:.14em;background:var(--cyan);color:var(--night);font-weight:700;border-radius:99px;padding:5px 11px}
+.axz .plans-note{text-align:center;color:var(--ink-soft);font-size:14.5px;margin-top:26px}
+
+/* ============ CONFIANCE ET DONNÉES ============ */
+.axz .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+@media(max-width:940px){.axz .trust-grid{grid-template-columns:1fr}}
+.axz .trust-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px 25px}
+.axz .trust-card .t-ico{font-size:22px}
+.axz .trust-card h4{font-size:19.5px;margin-top:10px}
+.axz .trust-card p{color:var(--ink-soft);font-size:15px;margin-top:6px}
+
+/* ============ FAQ ============ */
+.axz .faq-list{max-width:820px}
+.axz .faq-item{border-top:1px solid var(--line)}
+.axz .faq-item:last-child{border-bottom:1px solid var(--line)}
+.axz .faq-item summary{
+  font-family:var(--serif);font-size:20px;font-weight:560;cursor:pointer;
+  padding:20px 34px 20px 0;list-style:none;position:relative;line-height:1.3;
+}
+.axz .faq-item summary::-webkit-details-marker{display:none}
+.axz .faq-item summary::after{content:"+";position:absolute;right:2px;top:16px;font-size:26px;color:var(--terra);font-family:var(--sans);font-weight:400;transition:transform .3s var(--ease)}
+.axz .faq-item[open ] summary::after{transform:rotate(45deg)}
+.axz .faq-item .faq-a{padding:0 34px 22px 0;color:var(--ink-soft);font-size:16px;max-width:62ch}
+
+/* ============ FOOTER ============ */
+.axz footer{background:var(--ink);color:var(--cream);padding:64px 0 40px}
+.axz footer .f-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+.axz footer .f-brand{font-family:var(--serif);font-size:30px;font-weight:640}
+.axz footer .f-brand span{color:var(--terra)}
+.axz footer p{color:rgba(245,239,230,.7);font-size:14.5px;max-width:44ch;margin-top:8px}
+.axz footer .f-contact{font-size:13px;letter-spacing:.08em;line-height:2.1;font-weight:600}
+.axz footer .f-contact b{color:var(--terra);font-size:17px}
+.axz footer .f-bottom{border-top:1px solid rgba(245,239,230,.14);margin-top:44px;padding-top:22px;font-size:12px;letter-spacing:.1em;color:rgba(245,239,230,.55);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-weight:600}
+
+/* ============ BARRE D'ACTION MOBILE ============ */
+.axz .mobile-bar{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:1000;
+  background:rgba(251,248,241,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  align-items:center;justify-content:space-between;gap:12px;
+}
+.axz .mobile-bar .mb-txt{font-size:13px;font-weight:600;line-height:1.35}
+.axz .mobile-bar .mb-txt span{display:block;font-size:12px;color:var(--ink-soft);font-weight:500}
+.axz .mobile-bar .btn{padding:11px 20px;font-size:14.5px;flex:none}
+@media(max-width:760px){
+  .axz .mobile-bar{display:flex}
+  .axz{padding-bottom:62px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .axz *, .axz *::before, .axz *::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  .axz .rv-init{opacity:1;transform:none}
+  .axz{scroll-behavior:auto}
+}
+</style>
+<div class="progress" id="axzProgress"></div>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <div class="brand">DIGITALE <b>BUSINESSE</b></div>
+    <button class="burger" id="axzBurger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="axzNavlinks"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="axzNavlinks">
+      <a href="#principe">Le principe</a>
+      <a href="#aelyra">Aelyra</a>
+      <a href="#fonctionnement">Comment ça marche</a>
+      <a href="#oxyne">Oxyne Z</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-terra btn-nav" href="#tarifs">Essayer gratuitement</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow rv"><span class="dot"></span> UNE ÉQUIPE D'AGENTS POUR LES PME</span>
+    <div class="hero-grid">
+      <div>
+        <h1 class="rv rv-d1">L'une accueille.<br>L'autre <em>veille.</em></h1>
+        <p class="lede rv rv-d2">AELYRA répond aux clients de l'entreprise sur WhatsApp, jour et nuit. OXYNE Z surveille son nom et son numéro, et alerte le propriétaire dès qu'un faux compte apparaît. <strong>Deux agents, deux métiers, deux environnements — qui ne se mélangent jamais.</strong></p>
+        <div class="hero-cta rv rv-d3">
+          <a class="btn btn-terra" href="#tarifs">Essayer gratuitement</a>
+          <a class="btn btn-ghost" href="#aelyra">Voir Aelyra travailler</a>
+        </div>
+        <p class="hero-note rv rv-d3">7 jours d'essai gratuit, sans carte — on connecte ton WhatsApp, Aelyra répond à tes clients.</p>
+        <div class="hero-stats rv rv-d4">
+          <div class="stat"><div class="num"><span data-count="2">0</span></div><div class="lbl">agents spécialisés, un seul abonnement</div></div>
+          <div class="stat"><div class="num"><span data-count="7">0</span> <i>jours</i></div><div class="lbl">d'essai gratuit, sans carte</div></div>
+          <div class="stat"><div class="num"><span data-count="1">0</span></div><div class="lbl">environnement rien qu'à toi, par commerçant</div></div>
+        </div>
+      </div>
+      <div class="mark-card rv rv-d2">
+        <svg width="150" height="86" viewBox="0 0 150 86" fill="none" aria-hidden="true">
+          <path class="wavepath" d="M8 46 C 26 18, 40 18, 52 42 C 62 62, 74 62, 84 42 C 96 18, 112 18, 142 40" stroke="#C96F3F" stroke-width="7" stroke-linecap="round"/>
+          <circle class="wavedot" cx="75" cy="40" r="7.5" fill="#1C1A17"/>
+        </svg>
+        <div class="wordmark">AELYRA</div>
+        <div class="tagline">« La réceptionniste des entreprises. »</div>
+        <div class="micro">
+          TERRE CUITE · CRÈME · ENCRE — SERIF ÉLÉGANT<br>
+          SIGNÉE DIGITALE BUSINESSE
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Accueil <i>●</i> Réponse <i>●</i> Veille <i>●</i> Confiance <i>●</i> Vérité <i>●</i> Proximité <i>●</i></span>
+    <span>Accueil <i>●</i> Réponse <i>●</i> Veille <i>●</i> Confiance <i>●</i> Vérité <i>●</i> Proximité <i>●</i></span>
+  </div>
+</div>
+
+<section id="principe">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">01 — LE PRINCIPE</div>
+      <h2>Comme une conversation avec <em>plusieurs personnes :</em> chacun a son monde.</h2>
+      <p>On ne parle pas de la même façon à tout le monde, et on ne mélange pas les conversations. C'est pareil ici : chaque agent a son environnement, ses règles, son ton. Et chaque commerçant a le sien.</p>
+    </div>
+    <div class="duo">
+      <article class="agent-card card-aelyra rv">
+        <div class="env-tag">ENVIRONNEMENT N°1 — LE JOUR</div>
+        <h3>AELYRA</h3>
+        <div class="role">l'accueil, la voix de la maison</div>
+        <p>Elle répond aux clients sur WhatsApp, pour les salons de coiffure, les agences, les entreprises. Chaleureuse, claire, toujours polie — comme quelqu'un de la maison.</p>
+        <ul>
+          <li>Répond d'abord aux demandes sérieuses</li>
+          <li>Reçoit les rendez-vous, présente le catalogue</li>
+          <li>Envoie le lien de paiement Mobile Money</li>
+          <li>Dit la vérité : elle est une intelligence artificielle</li>
+        </ul>
+      </article>
+      <article class="agent-card card-oxyne rv rv-d1">
+        <div class="premium-chip">PREMIUM</div>
+        <div class="env-tag">ENVIRONNEMENT N°2 — LA NUIT</div>
+        <h3>OXYNE Z</h3>
+        <div class="role">le SOC, l'œil qui ne cligne pas</div>
+        <p>Il surveille les réseaux pour l'entreprise : fausses pages qui copient son nom, numéros de malfaiteurs qui se font passer pour elle. Il détecte, il alerte, il prépare le signalement.</p>
+        <ul>
+          <li>Détecte les usurpations d'entreprise</li>
+          <li>Alerte le propriétaire dès la détection</li>
+          <li>Prépare le signalement pour Facebook, WhatsApp, Instagram</li>
+          <li>Prépare le dossier de preuves pour la plainte</li>
+        </ul>
+      </article>
+    </div>
+    <div class="principle-note rv">
+      La règle d'or de la maison : <b>Aelyra ne fait pas le travail d'Oxyne Z, Oxyne Z ne répond pas aux clients.</b> Deux agents qui se mélangent, c'est un agent confus. Deux agents séparés, c'est une équipe.
+    </div>
+  </div>
+</section>
+
+<section id="aelyra" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">02 — ENVIRONNEMENT N°1</div>
+      <h2>Aelyra, dans <em>son</em> environnement : l'accueil.</h2>
+      <p>Son monde, c'est la conversation avec les clients de l'entreprise, sur WhatsApp. Regarde-la travailler : elle reçoit tout, elle trie, elle répond dans l'ordre — et elle revient vers tout le monde.</p>
+    </div>
+    <div class="split">
+      <div class="rules rv">
+        <div class="rule">
+          <div class="n">R1</div>
+          <div>
+            <h4>Elle trie avant de répondre</h4>
+            <p>Un message qui demande un prix, un rendez-vous, une commande : c'est une intention claire. Il passe devant. Les conversations sérieuses ne font pas la queue derrière les salutations.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="n">R2</div>
+          <div>
+            <h4>Personne n'est ignoré</h4>
+            <p>Les « cc », « salut », « bonsoir » sont mis de côté — pas jetés. Quand les échanges importants sont traités, elle revient vers chacun et ouvre la conversation.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="n">R3</div>
+          <div>
+            <h4>Elle dit la vérité</h4>
+            <p>Dès son premier message, elle se présente : la réceptionniste de la maison — et une intelligence artificielle. Pas de faux semblant, jamais.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="n">R4</div>
+          <div>
+            <h4>Elle sait passer la main</h4>
+            <p>Une question qu'elle ne peut pas traiter ? Elle transmet au patron, avec le résumé de la conversation. Le client n'a jamais à tout répéter.</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="phone" id="axzPhone">
+          <div class="phone-screen">
+            <div class="chat-head">
+              <div class="avatar">A</div>
+              <div class="who"><b>Salon « Chez Aïcha »</b><span>Aelyra répond · en ligne</span></div>
+            </div>
+            <div class="chat-body" id="axzChatBody">
+              <div class="msg in"><div class="meta"><span class="from">Cliente</span><span class="prio hot">PRIORITAIRE</span></div>Bonjour, la tresse africaine c'est combien ? Et vous avez une place samedi ?<span class="time">09:02</span></div>
+              <div class="msg out"><div class="meta"><span class="prio info">AELYRA</span></div>Bonjour, je suis Aelyra, la réceptionniste des entreprises — je suis une IA, au service du salon Chez Aïcha. La tresse africaine est à partir de 8 000 F. Samedi, il reste une place à 10h30 — je vous la bloque ?<span class="time">09:02</span></div>
+              <div class="msg in"><div class="meta"><span class="from">Nouveau client</span><span class="prio wait">MIS DE CÔTÉ</span></div>cc 👋<span class="time">09:03</span></div>
+              <div class="msg in"><div class="meta"><span class="from">Cliente</span><span class="prio hot">PRIORITAIRE</span></div>Oui, bloquez. Je paie l'acompte comment ?<span class="time">09:04</span></div>
+              <div class="msg out"><div class="meta"><span class="prio info">AELYRA</span></div>C'est réservé pour samedi 10h30. Voici le lien pour l'acompte de 2 000 F, payable par Orange Money, Wave ou MTN : <u>paiement.chez-aicha</u><span class="time">09:04</span></div>
+              <div class="msg out"><div class="meta"><span class="prio info">AELYRA REVIENT</span></div>Bonjour ! Je suis Aelyra, la réceptionniste du salon — une intelligence artificielle. Comment puis-je vous aider ?<span class="time">09:06</span></div>
+              <div class="typing" id="axzTyping"><i></i><i></i><i></i></div>
+            </div>
+            <div class="chat-foot"><div class="fake-input">Écrire un message…</div><div class="send">➤</div></div>
+          </div>
+        </div>
+        <div class="chat-caption">DÉMONSTRATION ANIMÉE — VUE DU COMMERÇANT :<br>LES ÉTIQUETTES « PRIORITAIRE / MIS DE CÔTÉ » SONT CE QUE LE PATRON VOIT ; LE CLIENT, LUI, REÇOIT JUSTE LES RÉPONSES.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fonctionnement" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">03 — COMMENT ÇA MARCHE</div>
+      <h2>En place en <em>trois temps.</em></h2>
+      <p>Pas de technique à apprendre, pas de logiciel à installer chez toi. Tu décris ton entreprise, on branche, Aelyra travaille.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv">
+        <div class="s-n">1</div>
+        <h4>Tu remplis ta fiche entreprise</h4>
+        <p>Tes services, tes prix, tes horaires, ton numéro officiel. Dix minutes, une seule fois — c'est la matière avec laquelle Aelyra répondra, sans jamais inventer.</p>
+      </div>
+      <div class="step rv rv-d1">
+        <div class="s-n">2</div>
+        <h4>On connecte ton WhatsApp</h4>
+        <p>Ton numéro d'entreprise est relié à ton environnement. Tes anciens échanges ne partent nulle part : tout ce qui arrive ensuite reste chez toi.</p>
+      </div>
+      <div class="step rv rv-d2">
+        <div class="s-n">3</div>
+        <h4>Aelyra répond à tes clients</h4>
+        <p>Elle trie, elle répond, elle prend les rendez-vous et envoie les liens de paiement. Toi, tu gardes la main : elle te transmet ce qui dépasse son rôle, avec le résumé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="patron" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">04 — LA VUE DU PATRON</div>
+      <h2>Ce que tu achètes, c'est <em>ce message du matin.</em></h2>
+      <p>Chaque matin, avant même d'ouvrir la boutique, Aelyra t'envoie ton résumé sur WhatsApp : la journée qui t'attend, ce qui demande ta décision, et ce qu'elle a déjà réglé.</p>
+    </div>
+    <div class="split">
+      <div class="patron-list rv">
+        <div class="rule">
+          <div class="n">☀</div>
+          <div>
+            <h4>Tes rendez-vous du jour</h4>
+            <p>Qui vient, à quelle heure, pour quoi — et si l'acompte est déjà payé. Tu sais comment ta journée est remplie avant de commencer.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="n">✋</div>
+          <div>
+            <h4>Les demandes qui t'attendent</h4>
+            <p>Ce qu'Aelyra n'a pas tranché seule : une demande spéciale, un prix à discuter, un client à rappeler. Rien ne se perd dans le fil des messages.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="n">✓</div>
+          <div>
+            <h4>Ce qu'elle a traité pour toi</h4>
+            <p>Les questions simples, les rendez-vous pris, les liens de paiement envoyés pendant que tu dormais ou que tu travaillais. Tu vois le travail fait, noir sur blanc.</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d1">
+        <div class="report-card">
+          <div class="report-head">
+            <div class="avatar">A</div>
+            <div class="who"><b>Aelyra → la patronne</b><span>Rapport du matin · 07:00</span></div>
+          </div>
+          <div class="report-msg">
+            <h5>☀️ Bonjour Aïcha, voici ta journée :</h5>
+            <ul>
+              <li><b>Rendez-vous :</b> 10h30 — tresse africaine (acompte reçu) ; 14h00 — soin + pose.</li>
+              <li><b>En attente de ta réponse :</b> 2 clientes pour des tissages — je t'ai préparé leurs messages.</li>
+              <li><b>Traité cette nuit :</b> 9 conversations répondues, 3 rendez-vous pris, aucun message laissé de côté.</li>
+            </ul>
+            <span class="r-time">07:00 ✓✓</span>
+          </div>
+        </div>
+        <div class="chat-caption">EXEMPLE DE RAPPORT — LES VRAIS CHIFFRES SERONT CEUX DE TON ENTREPRISE.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="oxyne" class="env-oxyne">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">05 — ENVIRONNEMENT N°2 · PREMIUM</div>
+      <h2>Oxyne Z, dans <em>son</em> environnement : la veille.</h2>
+      <p>Son monde n'est pas la conversation, c'est la surveillance. Il regarde ce qui se copie et ce qui s'usurpe sur les réseaux, et il protège le nom de l'entreprise.</p>
+    </div>
+    <div class="soc-panel rv">
+      <div class="radar" aria-hidden="true"></div>
+      <div class="soc-status"><span class="dot"></span> VEILLE ACTIVE — SALON « CHEZ AÏCHA »</div>
+      <div class="alert">
+        <h5>⚠ Fausse page détectée — Facebook</h5>
+        <p>Une page « Chez Aïcha — Officiel » copie le nom, le logo et les photos du salon. Elle propose des « promos » et demande des paiements sur un autre numéro.</p>
+        <div class="acts">
+          <span class="chip done">✓ Preuves capturées</span>
+          <span class="chip done">✓ Propriétaire alertée</span>
+        </div>
+        <div class="pending">
+          <div class="p-txt"><span>Signalement prêt</span> — en attente de ton accord</div>
+          <button type="button" class="btn-mini go">Envoyer</button>
+          <button type="button" class="btn-mini no">Ignorer</button>
+        </div>
+      </div>
+      <div class="alert red">
+        <h5>⚠ Numéro suspect détecté</h5>
+        <p>Un numéro inconnu réclame des acomptes aux clients au nom du salon. Le seul numéro officiel du salon est enregistré chez Oxyne Z — tout autre numéro est un faux.</p>
+        <div class="acts">
+          <span class="chip"><b>Dossier de preuves</b> — prêt pour la plainte</span>
+          <span class="chip"><b>Alerte publique</b> — texte prêt à publier</span>
+        </div>
+        <div class="pending">
+          <div class="p-txt"><span>Signalement WhatsApp prêt</span> — en attente de ton accord</div>
+          <button type="button" class="btn-mini go">Envoyer</button>
+          <button type="button" class="btn-mini no">Ignorer</button>
+        </div>
+      </div>
+      <div class="alert ok">
+        <h5 style="color:#B7D09A">✓ Vérification client — 10 secondes</h5>
+        <p>Un client doute d'un numéro ? Il demande à Aelyra : « c'est bien votre numéro ? » Elle compare au registre officiel d'Oxyne Z et répond oui ou non, net.</p>
+      </div>
+    </div>
+    <div class="soc-rules">
+      <div class="soc-rule rv"><h4><span>Il voit.</span></h4><p>Pages, comptes et numéros qui imitent l'entreprise sur Facebook, Instagram et WhatsApp — il les cherche et les suit, pour que tu n'aies pas à le faire.</p></div>
+      <div class="soc-rule rv rv-d1"><h4><span>Il prouve.</span></h4><p>Captures, liens, dates : chaque alerte arrive avec un dossier propre. Jamais une rumeur, toujours une preuve.</p></div>
+      <div class="soc-rule rv rv-d2"><h4><span>Il fait valider.</span></h4><p>Oxyne Z ne frappe jamais seul : le signalement et l'alerte publique ne partent qu'avec ton accord. La décision reste humaine — la tienne.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="environnements">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">06 — LES ENVIRONNEMENTS DES COMMERÇANTS</div>
+      <h2>Chaque commerçant a <em>son</em> environnement.</h2>
+      <p>Quand un salon, une agence et une boutique utilisent la même équipe, rien ne se croise : chacun a son catalogue, ses clients, sa mémoire, son numéro officiel. Comme toi qui causes avec plusieurs personnes — chacun dans son monde, aucune conversation ne fuit dans l'autre.</p>
+    </div>
+    <div class="merchants">
+      <article class="merchant m1 rv">
+        <div class="m-head"><div class="m-ico">✂️</div><div><h4>Salon « Chez Aïcha »</h4><div class="m-type">ENVIRONNEMENT — COIFFURE</div></div></div>
+        <div class="m-env">
+          <div><b>Son catalogue :</b> tresses, tissages, soins — ses prix à elle</div>
+          <div><b>Ses clientes :</b> leurs rendez-vous, leurs habitudes</div>
+          <div><b>Son numéro officiel :</b> enregistré chez Oxyne Z</div>
+        </div>
+        <div class="m-chat"><div class="q">« Vous faites les tresses pour enfants ? »</div><div class="a">Aelyra répond avec les tarifs enfants <b>du salon</b> — pas ceux du voisin.</div></div>
+      </article>
+      <article class="merchant m2 rv rv-d1">
+        <div class="m-head"><div class="m-ico">🏠</div><div><h4>Agence Horizon Immo</h4><div class="m-type">ENVIRONNEMENT — IMMOBILIER</div></div></div>
+        <div class="m-env">
+          <div><b>Son catalogue :</b> ses annonces, ses quartiers, ses loyers</div>
+          <div><b>Ses clients :</b> leurs budgets, leurs recherches</div>
+          <div><b>Son numéro officiel :</b> enregistré chez Oxyne Z</div>
+        </div>
+        <div class="m-chat"><div class="q">« Vous avez un studio meublé ? »</div><div class="a">Aelyra propose les biens <b>de l'agence</b> et prend le rendez-vous de visite.</div></div>
+      </article>
+      <article class="merchant m3 rv rv-d2">
+        <div class="m-head"><div class="m-ico">🛍️</div><div><h4>Boutique « Ndèye Fashion »</h4><div class="m-type">ENVIRONNEMENT — COMMERCE</div></div></div>
+        <div class="m-env">
+          <div><b>Son catalogue :</b> ses articles, ses tailles, son stock</div>
+          <div><b>Ses clientes :</b> leurs commandes, leurs livraisons</div>
+          <div><b>Son numéro officiel :</b> enregistré chez Oxyne Z</div>
+        </div>
+        <div class="m-chat"><div class="q">« La robe rouge est encore disponible ? »</div><div class="a">Aelyra vérifie <b>le stock de la boutique</b> et envoie le lien de paiement.</div></div>
+      </article>
+    </div>
+    <div class="walls rv">
+      <span class="lock">🔒 CLOISONNEMENT TOTAL</span>
+      <span>Les conversations d'un commerçant ne servent jamais un autre — sa mémoire est à lui, ses clientes sont à lui.</span>
+    </div>
+  </div>
+</section>
+
+<section id="tarifs" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">07 — TARIFS</div>
+      <h2>Une seule grille, <em>la même partout.</em></h2>
+      <p>Trois offres, décrites par ce qu'elles font — pas par des promesses. Tu commences par l'essai, tu choisis ensuite, sans engagement.</p>
+    </div>
+    <div class="trial-banner rv">
+      <div>
+        <h3>L'essai d'abord : <em>7 jours gratuits, sans carte.</em></h3>
+        <p>On connecte ton WhatsApp, Aelyra répond à tes vrais clients pendant une semaine. Tu juges sur le travail réel, pas sur un discours.</p>
+      </div>
+      <a class="btn btn-terra" href="#faq">Commencer l'essai gratuit</a>
+    </div>
+    <div class="plans">
+      <article class="plan rv">
+        <div class="p-tag">L'ESSENTIEL</div>
+        <h4>Essentiel</h4>
+        <p class="p-sub">Aelyra répond à tes clients, tous les jours.</p>
+        <ul>
+          <li>Aelyra sur ton WhatsApp d'entreprise</li>
+          <li>Tri par priorité — personne ignoré</li>
+          <li>Rendez-vous et rappels</li>
+          <li>Ton catalogue, tes prix, tes horaires</li>
+          <li>Liens de paiement Orange Money, Wave, MTN</li>
+        </ul>
+        <div class="price"><span class="amount">Bientôt</span><span class="when">prix annoncés au lancement</span></div>
+      </article>
+      <article class="plan rv rv-d1">
+        <div class="p-tag">POUR ALLER PLUS LOIN</div>
+        <h4>Pro</h4>
+        <p class="p-sub">Essentiel, plus le rapport qui te fait gagner du temps.</p>
+        <ul>
+          <li>Tout Essentiel</li>
+          <li>Le rapport du matin, sur ton WhatsApp</li>
+          <li>Relances : rendez-vous à confirmer, clients sans réponse</li>
+          <li>Plusieurs points de vente, chacun son environnement</li>
+        </ul>
+        <div class="price"><span class="amount">Bientôt</span><span class="when">prix annoncés au lancement</span></div>
+      </article>
+      <article class="plan featured rv rv-d2">
+        <div class="premium-chip2">PREMIUM</div>
+        <div class="p-tag">AVEC LA VEILLE OXYNE Z</div>
+        <h4>Premium</h4>
+        <p class="p-sub">Pro, plus la protection de ton nom et de ton numéro.</p>
+        <ul>
+          <li>Tout Pro</li>
+          <li>Oxyne Z : détection des fausses pages et comptes</li>
+          <li>Alertes avec dossier de preuves</li>
+          <li>Signalements préparés — tu valides avant l'envoi</li>
+          <li>Vérification de ton numéro officiel par tes clients</li>
+        </ul>
+        <div class="price"><span class="amount">Bientôt</span><span class="when">prix annoncés au lancement</span></div>
+      </article>
+    </div>
+    <p class="plans-note rv">Un doute entre deux offres ? Commence par l'essai gratuit : une semaine de travail réel vaut mieux qu'un tableau.</p>
+  </div>
+</section>
+
+<section id="confiance" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">08 — CONFIANCE ET DONNÉES</div>
+      <h2>Tes données sont <em>à toi.</em> Point.</h2>
+      <p>Aelyra travaille avec les conversations de tes clients : c'est une confiance, pas un détail. Voici nos règles, écrites noir sur blanc — et les partenaires techniques que nous nommons au lieu de les cacher.</p>
+    </div>
+    <div class="trust-grid">
+      <article class="trust-card rv">
+        <div class="t-ico">🔒</div>
+        <h4>Cloisonnées par commerçant</h4>
+        <p>Chaque entreprise vit dans son environnement. Tes conversations, ton catalogue et tes clients ne sont ni mélangés, ni visibles par un autre commerçant.</p>
+      </article>
+      <article class="trust-card rv rv-d1">
+        <div class="t-ico">🚫</div>
+        <h4>Jamais revendues</h4>
+        <p>Tes données et celles de tes clients ne sont ni vendues, ni cédées à des fins publicitaires. Elles servent un seul travail : le tien.</p>
+      </article>
+      <article class="trust-card rv rv-d2">
+        <div class="t-ico">🧠</div>
+        <h4>Pas d'entraînement public</h4>
+        <p>Les conversations de ton entreprise ne servent pas à entraîner des modèles d'IA publics. Ce que tes clients écrivent chez toi reste chez toi.</p>
+      </article>
+      <article class="trust-card rv">
+        <div class="t-ico">🗑️</div>
+        <h4>Suppression sur demande</h4>
+        <p>Tu pars, ou tu demandes simplement : les données de ton entreprise sont supprimées. Sans rétention cachée, sans condition.</p>
+      </article>
+      <article class="trust-card rv rv-d1">
+        <div class="t-ico">🔐</div>
+        <h4>Connexion sécurisée</h4>
+        <p>Les échanges avec la plateforme passent par une connexion chiffrée (HTTPS). Ce qui est vrai est dit tel quel — pas de formule magique, pas de promesse en l'air.</p>
+      </article>
+      <article class="trust-card rv rv-d2">
+        <div class="t-ico">🤝</div>
+        <h4>Des partenaires nommés</h4>
+        <p>La plateforme s'appuie sur des services techniques que nous nommons : Meta pour WhatsApp, notre fournisseur d'intelligence artificielle, et les services de paiement Mobile Money. La transparence fait partie du produit.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-num">09 — QUESTIONS FRÉQUENTES</div>
+      <h2>Ce que les commerçants <em>demandent d'abord.</em></h2>
+    </div>
+    <div class="faq-list rv">
+      <details class="faq-item">
+        <summary>Le client sait-il qu'il parle à une intelligence artificielle ?</summary>
+        <div class="faq-a">Oui, dès le premier message. Aelyra se présente : « Je suis Aelyra, la réceptionniste des entreprises — je suis une IA. » C'est une règle de la maison : pas de faux semblant, avec personne.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Et si Aelyra ne sait pas répondre ?</summary>
+        <div class="faq-a">Elle ne devine pas et elle n'invente ni prix ni prestation. Elle transmet la conversation au patron, avec un résumé clair — et le client est prévenu qu'un humain prend le relais. Le patron retrouve la demande dans son rapport.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Où vont mes données, et celles de mes clients ?</summary>
+        <div class="faq-a">Dans ton environnement, cloisonné : elles ne servent aucun autre commerçant, ne sont jamais revendues et n'entraînent pas de modèles publics. Sur ta demande, elles sont supprimées. Le détail est dans la section « Confiance et données » ci-dessus.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Oxyne Z fait quoi, exactement ?</summary>
+        <div class="faq-a">Il surveille les fausses pages, les faux comptes et les numéros qui se font passer pour ton entreprise sur Facebook, Instagram et WhatsApp. Quand il détecte quelque chose, il te prévient avec un dossier de preuves et prépare le signalement — qui ne part qu'avec ton accord. Il voit, il prouve, il fait valider.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">DIGITALE <span>BUSINESSE</span></div>
+        <p>L'équipe d'agents des PME : Aelyra accueille vos clients, Oxyne Z protège votre nom. Pensée ici, pour les entreprises d'ici.</p>
+      </div>
+      <div class="f-contact">
+        WHATSAPP PROFESSIONNEL<br><b>05-95-53-28-84</b>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 DIGITALE BUSINESSE — TOUS DROITS RÉSERVÉS</span>
+      <span>AELYRA × OXYNE Z</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <div class="mb-txt">Essai gratuit<span>7 jours, sans carte</span></div>
+  <a class="btn btn-terra" href="#tarifs">Essayer gratuitement</a>
+</div>
+
+</div><!-- /.axz -->
+
+<script>
+/* Menu burger — la navigation reste utilisable sur mobile */
+(function(){
+  var burger = document.getElementById('axzBurger');
+  var links = document.getElementById('axzNavlinks');
+  if (!burger || !links) return;
+  burger.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  });
+  links.addEventListener('click', function(e){
+    if (e.target.tagName === 'A') {
+      links.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+
+/* Barre de progression */
+(function(){
+  var prog = document.getElementById('axzProgress');
+  if (!prog) return;
+  addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }, {passive:true});
+})();
+
+/* Révélations au défilement — l'état caché est ajouté par le JS (rv-init),
+   jamais par le CSS : si ce script échoue, tout le contenu reste visible. */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.axz .rv');
+  if (reduce || !('IntersectionObserver' in window)) return;
+  els.forEach(function(el){ el.classList.add('rv-init'); });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold: .12});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+/* Compteurs du héros */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.axz [data-count]');
+  els.forEach(function(el){
+    var target = +el.dataset.count;
+    if (reduce || !('IntersectionObserver' in window)) { el.textContent = target; return; }
+    var cio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var t0 = performance.now();
+        (function tick(t){
+          var p = Math.min((t - t0) / 1100, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+        cio.unobserve(el);
+      });
+    }, {threshold:.6});
+    cio.observe(el);
+  });
+})();
+
+/* Conversation d'Aelyra — démonstration du tri, en boucle.
+   L'animation se met en PAUSE quand le téléphone sort de l'écran. */
+(function(){
+  var body = document.getElementById('axzChatBody');
+  var phone = document.getElementById('axzPhone');
+  var typing = document.getElementById('axzTyping');
+  if (!body || !typing) return;
+  var msgs = Array.prototype.slice.call(body.querySelectorAll('.msg'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { msgs.forEach(function(m){ m.classList.add('show'); }); return; }
+  var visible = true;
+  if ('IntersectionObserver' in window && phone) {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ visible = e.isIntersecting; });
+    }, {threshold:.15}).observe(phone);
+  }
+  var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+  async function waitVisible(){ while (!visible) { await wait(500); } }
+  async function playChat(){
+    while (true) {
+      msgs.forEach(function(m){ m.classList.remove('show'); });
+      typing.classList.remove('on');
+      await wait(900);
+      for (var i = 0; i < msgs.length; i++) {
+        var m = msgs[i];
+        await waitVisible();
+        if (m.classList.contains('out')) {
+          typing.classList.add('on');
+          await wait(1050);
+          await waitVisible();
+          typing.classList.remove('on');
+        }
+        m.classList.add('show');
+        await wait(m.classList.contains('out') ? 1500 : 1250);
+      }
+      await wait(5200);
+    }
+  }
+  playChat();
+})();
+</script>
+</body>
+</html>
