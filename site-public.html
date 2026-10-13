@@ -185,11 +185,11 @@ nav.links a:hover::after{width:100%}
 }
 .chat-head .who{line-height:1.3; min-width:0; flex:1}
 .chat-head .who b{font-size:14px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.badges-row{display:flex; align-items:center; gap:8px; margin-top:4px}
+.badges-row{display:flex; align-items:center; gap:6px; margin-top:4px; flex-wrap:wrap}
 .ia-badge{
-  display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700;
-  letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.2);
-  padding:3px 10px; border-radius:99px; margin-top:3px; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; background:rgba(255,255,255,.2);
+  padding:3px 9px; border-radius:99px; margin-top:0; white-space:nowrap;
 }
 .ia-badge .pulse-dot{width:7px; height:7px; border-radius:50%; background:#8fe388; animation:blink 1.6s infinite}
 .chat-body{
@@ -301,8 +301,8 @@ html{scrollbar-width:thin; scrollbar-color:#C96F3F #F5EFE6}
 @keyframes orb2{from{transform:translate(-50%,-50%) rotate(360deg)} to{transform:translate(-50%,-50%) rotate(0)}}
 
 /* ---------- V4 : badge démo simulée + champ interactif ---------- */
-.demo-sim{font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  color:#F3D3AC; border:1px dashed rgba(243,211,172,.7); padding:4px 10px; border-radius:99px; white-space:nowrap; flex-shrink:0}
+.demo-sim{font-size:8.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#F3D3AC; border:1px dashed rgba(243,211,172,.7); padding:3px 8px; border-radius:99px; white-space:nowrap; flex-shrink:0}
 .chat-input{
   margin:0 12px 14px; background:#fff; border-radius:99px; padding:6px 6px 6px 18px; z-index:20; flex-shrink:0;
   display:flex; align-items:center; gap:8px;
