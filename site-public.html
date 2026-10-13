@@ -225,12 +225,7 @@ nav.links a:hover::after{width:100%}
 .typing span{width:7px; height:7px; border-radius:50%; background:#8a8073; animation:tp 1.1s infinite}
 .typing span:nth-child(2){animation-delay:.18s}.typing span:nth-child(3){animation-delay:.36s}
 @keyframes tp{0%,60%,100%{transform:none; opacity:.5} 30%{transform:translateY(-5px); opacity:1}}
-.chat-input{
-  margin:0 12px 14px; background:#fff; border-radius:99px; padding:11px 18px; z-index:20; flex-shrink:0;
-  display:flex; align-items:center; justify-content:space-between;
-  box-shadow:0 2px 8px rgba(28,26,23,.12); color:#a09a8d; font-size:13.5px;
-}
-.chat-input svg{flex-shrink:0}
+
 /* halo terracotta derrière le téléphone */
 .phone-glow{
   position:absolute; inset:-40px; z-index:-1; border-radius:50%;
@@ -274,21 +269,81 @@ nav.links a:hover::after{width:100%}
   position:absolute; bottom:18px; right:24px; z-index:2;
   font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,239,230,.75);
 }
-/* ---------- ligne cinétique contour ---------- */
-.kinetic{
-  overflow:hidden; padding:56px 0 8px; background:var(--papier);
+/* ---------- V4 : nouvelles variables ---------- */
+:root{--braise:#E8A06A; --nuit-deep:#14100C}
+html{scrollbar-width:thin; scrollbar-color:#C96F3F #F5EFE6}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--creme)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--terracotta),var(--terracotta-deep)); border-radius:99px; border:2px solid var(--creme)}
+::selection{background:var(--terracotta); color:#fff}
+
+/* ---------- V4 : préloader ---------- */
+#loader{position:fixed; inset:0; z-index:3000; background:var(--papier);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  transition:opacity .45s ease, visibility .45s ease}
+#loader.done{opacity:0; visibility:hidden; pointer-events:none}
+#loader .logo{font-size:27px; display:inline-block; animation:loadin .7s var(--spring) both}
+@keyframes loadin{from{opacity:0; letter-spacing:.28em; filter:blur(6px)} to{opacity:1; letter-spacing:0; filter:blur(0)}}
+#loader .lbar{width:130px; height:2px; background:rgba(28,26,23,.12); margin:16px auto 0; border-radius:2px; overflow:hidden}
+#loader .lbar i{display:block; height:100%; width:40%; background:linear-gradient(90deg,var(--terracotta),var(--terracotta-deep)); border-radius:2px; animation:lslide .8s ease-in-out infinite}
+@keyframes lslide{0%{transform:translateX(-130%)} 100%{transform:translateX(330%)}}
+
+/* ---------- V4 : orbites cuivre autour du téléphone ---------- */
+.phone-stage{position:relative}
+.orbits{position:absolute; top:50%; left:50%; width:560px; height:560px; transform:translate(-50%,-50%); pointer-events:none; z-index:0}
+.orbits i{position:absolute; top:50%; left:50%; border:1px solid rgba(232,160,106,.4); border-radius:50%}
+.orbits .o1{width:450px; height:290px; animation:orb1 26s linear infinite}
+.orbits .o1::after{content:""; position:absolute; top:-3px; left:50%; width:6px; height:6px; border-radius:50%; background:var(--terracotta); box-shadow:0 0 14px rgba(201,111,63,.95)}
+.orbits .o2{width:560px; height:360px; animation:orb2 40s linear infinite; border-color:rgba(232,160,106,.28)}
+.orbits .o3{width:370px; height:520px; animation:orb1 52s linear infinite; border-color:rgba(232,160,106,.22)}
+@keyframes orb1{from{transform:translate(-50%,-50%) rotate(0)} to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes orb2{from{transform:translate(-50%,-50%) rotate(360deg)} to{transform:translate(-50%,-50%) rotate(0)}}
+
+/* ---------- V4 : badge démo simulée + champ interactif ---------- */
+.demo-sim{margin-left:auto; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:#F3D3AC; border:1px dashed rgba(243,211,172,.7); padding:5px 12px; border-radius:99px; white-space:nowrap; flex-shrink:0}
+.chat-input{
+  margin:0 12px 14px; background:#fff; border-radius:99px; padding:6px 6px 6px 18px; z-index:20; flex-shrink:0;
+  display:flex; align-items:center; gap:8px;
+  box-shadow:0 2px 8px rgba(28,26,23,.12);
 }
-.kinetic-track{
-  display:flex; width:max-content; white-space:nowrap;
-  animation:kinetic 70s linear infinite;
+.chat-input input{flex:1; min-width:0; border:none; outline:none; background:transparent;
+  font-family:'Archivo',sans-serif; font-size:13.5px; color:var(--encre)}
+.chat-input input::placeholder{color:#a09a8d}
+.chat-input button{width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; flex-shrink:0;
+  background:linear-gradient(135deg,var(--terracotta),var(--terracotta-deep));
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .25s var(--spring), box-shadow .25s ease}
+.chat-input button:hover{transform:scale(1.08); box-shadow:0 6px 16px rgba(201,111,63,.45)}
+.chat-input button svg{display:block}
+
+/* ---------- V4 : traitement « braise » (Oxyne Z) ---------- */
+.oxyne{
+  background:
+    radial-gradient(900px 420px at 12% -4%, rgba(201,111,63,.16), transparent 60%),
+    radial-gradient(720px 400px at 88% 104%, rgba(164,83,39,.14), transparent 60%),
+    var(--nuit-deep);
+  border-top:1px solid rgba(232,160,106,.3);
+  border-bottom:1px solid rgba(232,160,106,.3);
 }
-.kinetic-track span{
-  font-family:'Fraunces',serif; font-weight:600; font-size:clamp(64px,9vw,132px);
-  letter-spacing:.04em; color:transparent;
-  -webkit-text-stroke:1.5px rgba(164,83,39,.5);
-  padding-right:60px;
-}
-@keyframes kinetic{to{transform:translateX(-50%)}}
+.oxyne::before{content:""; position:absolute; top:0; left:0; right:0; height:150px; z-index:1; pointer-events:none;
+  background:linear-gradient(180deg, var(--creme), transparent)}
+.oxyne::after{content:""; position:absolute; bottom:0; left:0; right:0; height:150px; z-index:1; pointer-events:none;
+  background:linear-gradient(0deg, var(--papier), transparent)}
+
+/* ---------- V4 : titres réactifs + orbe retour en haut ---------- */
+.glow-t{transition:text-shadow .3s ease}
+#toTop{position:fixed; right:26px; bottom:26px; z-index:1500;
+  width:54px; height:54px; border-radius:50%; border:none; cursor:pointer;
+  background:linear-gradient(135deg,var(--terracotta),var(--terracotta-deep)); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 12px 30px rgba(164,83,39,.42);
+  opacity:0; transform:translateY(16px); pointer-events:none;
+  transition:opacity .4s ease, transform .4s var(--spring)}
+#toTop.show{opacity:1; transform:none; pointer-events:auto}
+#toTop::after{content:""; position:absolute; inset:-5px; border-radius:50%; z-index:-1;
+  background:radial-gradient(closest-side, rgba(201,111,63,.5), transparent);
+  animation:halo 2.6s ease-in-out infinite}
 /* ---------- révélations au scroll ---------- */
 .reveal{opacity:0; transform:translateY(34px); filter:blur(7px);
   transition:opacity .9s ease, transform .9s var(--spring), filter .9s ease}
@@ -486,9 +541,15 @@ details[open] .faq-a{grid-template-rows:1fr}
 .faq-a > div{overflow:hidden}
 .faq-a p{padding:0 26px 22px; color:var(--encre-douce); font-size:15px}
 /* ---------- footer ---------- */
-footer{background:var(--encre); color:#B9AE97; padding:64px 0 34px; position:relative; overflow:hidden}
-footer::before{content:""; position:absolute; inset:0;
-  background:radial-gradient(800px 300px at 50% -60px, rgba(201,111,63,.14), transparent 60%)}
+footer{
+  background:
+    radial-gradient(900px 340px at 50% -70px, rgba(201,111,63,.2), transparent 62%),
+    radial-gradient(640px 320px at 88% 118%, rgba(164,83,39,.13), transparent 60%),
+    var(--nuit-deep);
+  border-top:1px solid rgba(232,160,106,.28);
+  color:#B9AE97; padding:64px 0 34px; position:relative; overflow:hidden}
+footer::before{content:""; position:absolute; top:0; left:0; right:0; height:130px;
+  background:linear-gradient(180deg, var(--creme), transparent); opacity:.85; pointer-events:none}
 .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; margin-bottom:44px; position:relative}
 .foot-grid .logo{color:var(--creme)}
 .foot-grid p{font-size:14px; margin-top:12px; max-width:34ch}
@@ -515,6 +576,7 @@ footer::before{content:""; position:absolute; inset:0;
   section{padding:64px 0}
   .radar{width:600px; height:600px; top:-200px}
   .photo-band{height:60vh; min-height:400px}
+  .orbits{display:none}
 }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
@@ -525,6 +587,12 @@ footer::before{content:""; position:absolute; inset:0;
 </style>
 </head>
 <body>
+<div id="loader" aria-hidden="true">
+  <div>
+    <span class="logo">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></span>
+    <div class="lbar"><i></i></div>
+  </div>
+</div>
 <header class="site">
   <div class="wrap nav">
     <a class="logo" href="#">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></a>
@@ -553,14 +621,15 @@ footer::before{content:""; position:absolute; inset:0;
       <p class="hero-note"><span class="dot"></span> Sans carte bancaire · Sans engagement · En français</p>
     </div>
     <div class="phone-stage" id="phoneStage">
+      <div class="orbits" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i></div>
       <div class="phone-float">
         <div class="phone-tilt" id="phoneTilt">
-          <div class="phone" aria-label="Démonstration : conversation WhatsApp avec Aelyra">
+          <div class="phone" aria-label="Démo simulée : conversation WhatsApp avec Aelyra">
             <span class="btn-side mute"></span><span class="btn-side vup"></span><span class="btn-side vdn"></span>
             <div class="phone-screen">
               <div class="island"></div>
               <div class="statusbar">
-                <span>09:41</span>
+                <span id="clockTime">--:--</span>
                 <span class="sicons">
                   <svg width="17" height="11" viewBox="0 0 17 11" fill="#1C1A17"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
                   <svg width="16" height="11" viewBox="0 0 16 12" fill="none" stroke="#1C1A17" stroke-width="1.6" stroke-linecap="round"><path d="M1.5 4.5a10 10 0 0 1 13 0"/><path d="M4 7.2a6.4 6.4 0 0 1 8 0"/><circle cx="8" cy="10" r="1.3" fill="#1C1A17" stroke="none"/></svg>
@@ -573,12 +642,13 @@ footer::before{content:""; position:absolute; inset:0;
                   <b>Aelyra · Salon Kadi Coiffure</b>
                   <span class="ia-badge"><span class="pulse-dot"></span> Je suis une IA</span>
                 </div>
+                <span class="demo-sim">Démo simulée</span>
               </div>
               <div class="chat-body" id="chatBody"></div>
-              <div class="chat-input">
-                <span>Écrivez un message…</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A45327" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
-              </div>
+              <form class="chat-input" id="demoForm" autocomplete="off">
+                <input id="demoInput" type="text" placeholder="Écrivez un message…" maxlength="200" aria-label="Écrivez un message pour tester la démo">
+                <button type="submit" aria-label="Envoyer le message"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></button>
+              </form>
             </div>
             <div class="phone-glow"></div>
           </div>
@@ -604,12 +674,6 @@ footer::before{content:""; position:absolute; inset:0;
   </div>
   <span class="pb-cap">Photo d'illustration</span>
 </section>
-
-<div class="kinetic" aria-hidden="true">
-  <div class="kinetic-track">
-    <span>2050 · L'ACCUEIL INTELLIGENT · 2050 · L'ACCUEIL INTELLIGENT · </span><span>2050 · L'ACCUEIL INTELLIGENT · 2050 · L'ACCUEIL INTELLIGENT · </span>
-  </div>
-</div>
 
 <section id="service">
   <div class="wrap">
@@ -831,10 +895,14 @@ footer::before{content:""; position:absolute; inset:0;
     </div>
     <div class="foot-bottom">
       <span>© 2026 DIGITALE BUSINESSE — Tous droits réservés.</span>
-      <span class="demo-tag">Démo visuelle · maquette de démonstration</span>
+      <span>Heure locale : <b id="localTime" style="color:var(--creme)">--:--</b></span>
+      <span class="demo-tag">Démo visuelle · simulation, pas la vraie IA</span>
     </div>
   </div>
 </footer>
+<button id="toTop" aria-label="Retour en haut">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
 <script>
 (function(){
 "use strict";
@@ -870,9 +938,13 @@ else{
   });
 }
 
-/* ---------- chat : boucle animée réaliste ---------- */
+/* ---------- V4 : démo interactive + boucle auto ---------- */
 var chat = document.getElementById('chatBody');
+var demoForm = document.getElementById('demoForm');
+var demoInput = document.getElementById('demoInput');
 function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function nowTime(){ var d = new Date(); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
 function el(html, cls){
   var d = document.createElement('div');
   d.className = cls; d.innerHTML = html;
@@ -891,44 +963,134 @@ function typingBubble(who){
   return d;
 }
 function msgClient(text, time, prio){
-  return el(text + '<span class="time">' + time + '</span>', 'msg client' + (prio ? ' prio' : ''));
-}
-function msgClientPlain(text, time){
-  return msgClient(text, time, false);
+  return el(escapeHtml(text) + '<span class="time">' + time + '</span>', 'msg client' + (prio ? ' prio' : ''));
 }
 function msgAelyra(text, time){
-  return el('<span class="tag">Aelyra</span>' + text + '<span class="time">' + time + '</span>', 'msg aelyra');
+  return el('<span class="tag">Aelyra</span>' + escapeHtml(text) + '<span class="time">' + time + '</span>', 'msg aelyra');
 }
 var T = function(ms){ return reduceMotion ? Math.min(ms, 60) : ms; };
-async function chatLoop(){
+var demo = { auto:true, idleTimer:null, runId:0 };
+
+function replyFor(text){
+  var t = ' ' + text.toLowerCase() + ' ';
+  if(/rendez vous|\brdv\b|reserver|réserver|reservation|creneau|créneau|disponib|samedi|dimanche|lundi|mardi|mercredi|jeudi|vendredi|heure/.test(t))
+    return "Avec plaisir ! Samedi 10h et 14h sont libres — je vous note pour quel créneau ?";
+  if(/prix|tarif|combien|cout|coût|abonnement|offre|cher/.test(t))
+    return "Trois offres simples : Essentiel 6 000 F, Pro 10 000 F, Premium 60 000 F par mois. 7 jours d'essai, sans carte bancaire.";
+  if(/produit|catalogue|article|menu|service|coiffure|tresses/.test(t))
+    return "Je vous envoie le catalogue tout de suite — dites-moi ce qui vous plaît et je prépare tout.";
+  if(/mobile money|payer|paiement|wave|orange money|mtn/.test(t))
+    return "Vous pouvez payer par Mobile Money en un clic — je vous envoie le lien sécurisé dès que vous êtes prêt.";
+  if(/bonjour|salut|\bcc\b|coucou|bonsoir|hello/.test(t))
+    return "Bonjour et bienvenue ! Je suis Aelyra, l'assistante du salon. Un rendez-vous, ou une question sur nos tarifs ?";
+  if(/merci/.test(t))
+    return "Avec grand plaisir ! Je reste là si vous avez besoin.";
+  return "Bien noté, je transmets à l'équipe. En attendant : voulez-vous prendre rendez-vous ou découvrir nos tarifs ?";
+}
+
+async function userSend(text){
+  demo.auto = false; demo.runId++;
+  clearTimeout(demo.idleTimer);
+  msgClient(text, nowTime(), false);
+  await sleep(T(650));
+  var tp = typingBubble('aelyra');
+  await sleep(T(1300 + Math.random() * 900));
+  if(tp.parentNode) tp.remove();
+  msgAelyra(replyFor(text), nowTime());
+  demo.idleTimer = setTimeout(function(){
+    demo.auto = true;
+    startAuto();
+  }, 25000);
+}
+var sendQueue = Promise.resolve();
+
+async function startAuto(){
+  var myRun = ++demo.runId;
+  var alive = function(){ return demo.auto && demo.runId === myRun; };
   await sleep(T(900));
-  while(true){
+  while(alive()){
     chat.innerHTML = '';
     var t;
-    t = typingBubble('client'); await sleep(T(1200)); t.remove();
-    msgClient('Bonjour, vous coiffez samedi à 10h ?', '09:41', true);
-    await sleep(T(900));
-    t = typingBubble('aelyra'); await sleep(T(1700)); t.remove();
-    msgAelyra('Bonjour ! Oui, samedi 10h est libre. Je vous le réserve au nom de ?', '09:41');
-    await sleep(T(1100));
-    t = typingBubble('client'); await sleep(T(900)); t.remove();
-    msgClientPlain('Awa, merci !', '09:42');
-    await sleep(T(700));
+    t = typingBubble('client'); await sleep(T(1200)); if(!alive()){ if(t.parentNode) t.remove(); return; } t.remove();
+    msgClient('Bonjour, vous coiffez samedi à 10h ?', nowTime(), true);
+    await sleep(T(900)); if(!alive()) return;
+    t = typingBubble('aelyra'); await sleep(T(1700)); if(!alive()){ if(t.parentNode) t.remove(); return; } t.remove();
+    msgAelyra("Bonjour ! Oui, samedi 10h est libre. Je vous le réserve au nom de ?", nowTime());
+    await sleep(T(1100)); if(!alive()) return;
+    t = typingBubble('client'); await sleep(T(900)); if(!alive()){ if(t.parentNode) t.remove(); return; } t.remove();
+    msgClient('Awa, merci !', nowTime(), false);
+    await sleep(T(700)); if(!alive()) return;
     el('Message prioritaire traité', 'prio-note');
-    await sleep(T(1600));
-    t = typingBubble('client'); await sleep(T(1000)); t.remove();
-    msgClientPlain('cc', '09:42');
-    await sleep(T(1100));
-    t = typingBubble('aelyra'); await sleep(T(1500)); t.remove();
-    msgAelyra('Bonjour ! Bienvenue au Salon Kadi Coiffure. Que puis-je faire pour vous ?', '09:44');
-    await sleep(T(4200));
+    await sleep(T(1600)); if(!alive()) return;
+    t = typingBubble('client'); await sleep(T(1000)); if(!alive()){ if(t.parentNode) t.remove(); return; } t.remove();
+    msgClient('cc', nowTime(), false);
+    await sleep(T(1100)); if(!alive()) return;
+    t = typingBubble('aelyra'); await sleep(T(1500)); if(!alive()){ if(t.parentNode) t.remove(); return; } t.remove();
+    msgAelyra('Bonjour ! Bienvenue au Salon Kadi Coiffure. Que puis-je faire pour vous ?', nowTime());
+    await sleep(T(4200)); if(!alive()) return;
     Array.prototype.forEach.call(chat.children, function(c){
       c.style.transition = 'opacity .5s'; c.style.opacity = '0';
     });
-    await sleep(T(600));
+    await sleep(T(600)); if(!alive()) return;
   }
 }
-chatLoop();
+if(demoForm){
+  demoForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = demoInput.value.trim();
+    if(!v) return;
+    demoInput.value = '';
+    sendQueue = sendQueue.then(function(){ return userSend(v); });
+  });
+}
+startAuto();
+
+/* ---------- V4 : horloge vivante ---------- */
+function tickClock(){
+  var t = nowTime();
+  var c1 = document.getElementById('clockTime'); if(c1) c1.textContent = t;
+  var c2 = document.getElementById('localTime'); if(c2) c2.textContent = t;
+}
+tickClock();
+setInterval(tickClock, 15000);
+
+/* ---------- V4 : préloader ---------- */
+(function(){
+  var loader = document.getElementById('loader');
+  if(!loader) return;
+  function hide(){ loader.classList.add('done'); }
+  if(reduceMotion){ hide(); return; }
+  window.addEventListener('load', function(){ setTimeout(hide, 350); });
+  setTimeout(hide, 2500);
+})();
+
+/* ---------- V4 : titres réactifs ---------- */
+if(!reduceMotion){
+  document.querySelectorAll('section .wrap > h2').forEach(function(h){
+    h.classList.add('glow-t');
+    var sec = h.closest('section');
+    sec.addEventListener('mousemove', function(e){
+      var r = h.getBoundingClientRect();
+      var dx = (e.clientX - (r.left + r.width / 2)) / Math.max(r.width, 1);
+      var dy = (e.clientY - (r.top + r.height / 2)) / Math.max(r.height, 1);
+      h.style.textShadow = (dx * 10).toFixed(1) + 'px ' + (dy * 8).toFixed(1) + 'px 36px rgba(201,111,63,.4)';
+    });
+    sec.addEventListener('mouseleave', function(){ h.style.textShadow = ''; });
+  });
+}
+
+/* ---------- V4 : orbe retour en haut ---------- */
+(function(){
+  var btn = document.getElementById('toTop');
+  if(!btn) return;
+  function onScroll(){ btn.classList.toggle('show', window.scrollY > 700); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+  });
+})();
+
 
 /* ---------- bandeau photo : parallaxe au scroll (JS, pas background-attachment) ---------- */
 var pbImg = document.getElementById('pbImg'), photoBand = document.getElementById('photoBand');
