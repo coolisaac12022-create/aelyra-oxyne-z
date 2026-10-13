@@ -183,8 +183,9 @@ nav.links a:hover::after{width:100%}
   font-family:'Fraunces',serif; font-weight:700; color:var(--terracotta-deep); font-size:18px;
   flex-shrink:0; box-shadow:inset 0 0 0 2px rgba(164,83,39,.3);
 }
-.chat-head .who{line-height:1.3; min-width:0}
+.chat-head .who{line-height:1.3; min-width:0; flex:1}
 .chat-head .who b{font-size:14px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.badges-row{display:flex; align-items:center; gap:8px; margin-top:4px}
 .ia-badge{
   display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.2);
@@ -300,7 +301,7 @@ html{scrollbar-width:thin; scrollbar-color:#C96F3F #F5EFE6}
 @keyframes orb2{from{transform:translate(-50%,-50%) rotate(360deg)} to{transform:translate(-50%,-50%) rotate(0)}}
 
 /* ---------- V4 : badge démo simulée + champ interactif ---------- */
-.demo-sim{margin-left:auto; font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+.demo-sim{font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
   color:#F3D3AC; border:1px dashed rgba(243,211,172,.7); padding:4px 10px; border-radius:99px; white-space:nowrap; flex-shrink:0}
 .chat-input{
   margin:0 12px 14px; background:#fff; border-radius:99px; padding:6px 6px 6px 18px; z-index:20; flex-shrink:0;
@@ -640,9 +641,8 @@ footer::before{content:""; position:absolute; top:0; left:0; right:0; height:130
                 <div class="avatar">A</div>
                 <div class="who">
                   <b>Aelyra · Salon Kadi Coiffure</b>
-                  <span class="ia-badge"><span class="pulse-dot"></span> Je suis une IA</span>
+                  <span class="badges-row"><span class="ia-badge"><span class="pulse-dot"></span> Je suis une IA</span><span class="demo-sim">Démo simulée</span></span>
                 </div>
-                <span class="demo-sim">Démo simulée</span>
               </div>
               <div class="chat-body" id="chatBody"></div>
               <form class="chat-input" id="demoForm" autocomplete="off">
