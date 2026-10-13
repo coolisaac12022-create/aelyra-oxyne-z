@@ -31,7 +31,16 @@ if ( isset( $_GET['offre'] ) ) {
 }
 
 if ( isset( $_POST['axz_inscription_submit'] ) ) {
-	check_admin_referer( 'axz_inscription', 'axz_inscription_nonce' );
+	/* Honeypot anti-bot : champ invisible pour les humains. Vérifié AVANT
+	   le nonce : un bot ne remplit jamais correctement les deux. */
+	if ( isset( $_POST['axz_website'] ) && '' !== trim( (string) wp_unslash( $_POST['axz_website'] ) ) ) {
+		if ( function_exists( 'axz_sec_log' ) ) {
+			axz_sec_log( 'bot_honeypot', 'inscription', __( 'Honeypot rempli sur le formulaire d\u2019inscription.', 'axz' ) );
+		}
+		wp_die( esc_html__( 'Une erreur est survenue. Réessaie.', 'axz' ), '', array( 'response' => 403 ) );
+	}
+	/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+	axz_verify_nonce_log( 'axz_inscription', 'axz_inscription_nonce' );
 
 	$nom   = isset( $_POST['axz_nom'] ) ? sanitize_text_field( wp_unslash( $_POST['axz_nom'] ) ) : '';
 	$email = isset( $_POST['axz_email'] ) ? sanitize_email( wp_unslash( $_POST['axz_email'] ) ) : '';
@@ -123,6 +132,8 @@ get_header();
 
       <form method="post" action="">
         <?php wp_nonce_field( 'axz_inscription', 'axz_inscription_nonce' ); ?>
+        <?php /* Honeypot anti-bot : invisible en CSS, les bots le remplissent. */ ?>
+        <p class="axz-hp" aria-hidden="true"><label><?php esc_html_e( 'Site web', 'axz' ); ?> <input type="text" name="axz_website" value="" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="field">
           <label for="axz_nom"><?php esc_html_e( 'Ton nom', 'axz' ); ?></label>

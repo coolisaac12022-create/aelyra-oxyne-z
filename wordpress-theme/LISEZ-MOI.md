@@ -79,6 +79,44 @@ define( 'DISALLOW_FILE_EDIT', true ); // pas d'édition de fichiers depuis l'adm
 define( 'FORCE_SSL_ADMIN', true );     // admin + connexion en HTTPS
 ```
 
+## Sécurité intégrée au thème
+
+Le thème embarque un module de sécurité sérieux (les attaques contre les
+vibe codeurs sont fréquentes) :
+
+- **Journal de sécurité** (`Aelyra > Sécurité`, administrateur uniquement) :
+  chaque tentative d'attaque est enregistrée avec date, adresse IP et
+  navigateur — connexion échouée, accès interdit, nonce invalide, bot
+  piégé par le honeypot, requête suspecte, IP bloquée, XML-RPC bloqué.
+  Conservation : 90 jours (purge automatique quotidienne).
+- **Blocage automatique** : 10 échecs de connexion en 1 heure depuis la même
+  IP → IP bloquée 1 heure (page 403 + journal). Blocage/déblocage manuel
+  possible depuis le journal.
+- **Alerte e-mail** : si une IP génère 10 événements en 1 heure,
+  l'administrateur reçoit un e-mail « [Aelyra] Activité suspecte détectée ».
+  L'envoi dépend de l'hébergeur : le journal reste la source fiable.
+- **Honeypot anti-bot** : champ invisible sur les formulaires de connexion
+  et d'inscription — un bot qui le remplit est journalisé et bloqué (403).
+- **XML-RPC désactivé** (vecteur de force brute) + 403 journalisé sur accès
+  direct à `xmlrpc.php`.
+- **Énumération d'utilisateurs bloquée** : `?author=N` redirigé vers
+  l'accueil + journalisé ; listage `/wp/v2/users` masqué aux visiteurs.
+- **Requêtes suspectes** : les URL contenant `../`, `wp-config`, `.env`,
+  `.git` sont bloquées en 403 et journalisées ; `<script`, `UNION SELECT`,
+  `eval(` sont journalisés.
+- **Nonces journalisés** : tout échec de nonce dans l'admin écrit une ligne
+  `nonce_invalide` avant le refus (même comportement qu'avant, avec preuve).
+- **En-têtes HTTP** : `X-Content-Type-Options: nosniff`,
+  `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy:
+  strict-origin-when-cross-origin` ; version de WordPress masquée.
+- **Limites** : limitation de connexion 5 essais / 15 min par IP (déjà
+  présente), clients redirigés hors de `wp-admin` (tentative journalisée),
+  rôles et capacités stricts (voir `inc/roles.php`).
+
+Limite honnête : une adresse IP ne permet **pas** d'identifier la personne
+derrière une attaque (VPN, proxy, IP partagée). Les journaux servent de
+preuves pour les autorités ou l'hébergeur — jamais de « hack back ».
+
 ## Sécurité — à faire par toi
 
 - **Active la double authentification (2FA)** sur ton compte administrateur
