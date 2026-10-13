@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aelyra × Oxyne Z — Vos clients accueillis. Votre nom protégé.</title>
+<meta name="description" content="Aelyra, la réceptionniste IA des entreprises sur WhatsApp. Oxyne Z veille contre l'usurpation. Essai 7 jours gratuits, sans carte.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terracotta:#C96F3F; --terracotta-deep:#A45327;
+  --creme:#F5EFE6; --papier:#FBF8F1;
+  --encre:#1C1A17; --encre-douce:#4A443C; --succes:#7BA05B;
+  --nuit:#16120E; --nuit2:#201913;
+  --cyan:#3FC1C9; --cyan-clair:#5BD0D8; --alerte:#D05545;
+  --r:18px; --gap:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Archivo',sans-serif; color:var(--encre); background:var(--papier);
+  line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+/* grain subtil anti-« généré par IA » */
+body::before{
+  content:""; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+h1,h2,h3,.serif{font-family:'Fraunces',serif; font-weight:600; line-height:1.15; letter-spacing:-.01em}
+.kicker{
+  font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--terracotta-deep); margin-bottom:14px; display:block;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px}
+section{padding:88px 0}
+.btn{
+  display:inline-flex; align-items:center; gap:10px; border-radius:99px;
+  padding:15px 32px; font-weight:700; font-size:15px; text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease; border:none; cursor:pointer;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--terracotta); color:#fff; box-shadow:0 10px 26px rgba(201,111,63,.32)}
+.btn-primary:hover{background:var(--terracotta-deep)}
+.btn-ghost{background:transparent; color:var(--encre); border:1.5px solid rgba(28,26,23,.28)}
+.btn-ghost:hover{border-color:var(--terracotta); color:var(--terracotta-deep)}
+/* ---------- header ---------- */
+header.site{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(251,248,241,.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(28,26,23,.08);
+}
+.nav{display:flex; align-items:center; justify-content:space-between; height:74px}
+.logo{font-family:'Fraunces',serif; font-weight:700; font-size:21px; color:var(--encre); text-decoration:none}
+.logo .x{color:var(--terracotta); font-style:italic; margin:0 4px}
+.logo .z{color:var(--terracotta-deep)}
+nav.links{display:flex; gap:34px}
+nav.links a{
+  text-decoration:none; color:var(--encre-douce); font-weight:600; font-size:14.5px;
+  letter-spacing:.04em; position:relative;
+}
+nav.links a::after{
+  content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
+  background:var(--terracotta); transition:width .2s ease;
+}
+nav.links a:hover::after{width:100%}
+.nav-cta{padding:12px 26px; font-size:14px}
+/* ---------- hero ---------- */
+.hero{
+  padding:158px 0 84px; position:relative;
+  background:
+    radial-gradient(900px 480px at 88% 8%, rgba(201,111,63,.14), transparent 60%),
+    radial-gradient(700px 420px at 4% 90%, rgba(201,111,63,.09), transparent 60%),
+    var(--papier);
+}
+.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center}
+.hero h1{font-size:clamp(38px,4.6vw,60px); margin:0 0 22px}
+.hero h1 em{font-style:italic; color:var(--terracotta-deep)}
+.hero p.lead{font-size:18px; color:var(--encre-douce); max-width:46ch; margin-bottom:34px}
+.hero-ctas{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:26px}
+.hero-note{font-size:13.5px; color:var(--encre-douce); display:flex; align-items:center; gap:8px}
+.dot{width:8px; height:8px; border-radius:50%; background:var(--succes); display:inline-block}
+/* fausse conversation WhatsApp */
+.phone{
+  background:var(--creme); border-radius:28px; padding:14px;
+  box-shadow:0 30px 70px rgba(28,26,23,.18), inset 0 0 0 1px rgba(28,26,23,.08);
+  max-width:380px; margin-left:auto; transform:rotate(1.2deg);
+}
+.phone-screen{
+  background:#EDE4D3; border-radius:18px; overflow:hidden;
+  background-image:radial-gradient(rgba(28,26,23,.05) 1px, transparent 1px);
+  background-size:18px 18px;
+}
+.chat-head{
+  background:var(--terracotta-deep); color:#fff; padding:14px 16px;
+  display:flex; align-items:center; gap:12px;
+}
+.avatar{
+  width:42px; height:42px; border-radius:50%; background:var(--creme);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces',serif; font-weight:700; color:var(--terracotta-deep); font-size:19px;
+  flex-shrink:0;
+}
+.chat-head .who{line-height:1.3}
+.chat-head .who b{font-size:15px; display:block}
+.ia-badge{
+  display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.2);
+  padding:3px 10px; border-radius:99px; margin-top:3px;
+}
+.chat-body{padding:18px 14px; display:flex; flex-direction:column; gap:10px; min-height:340px}
+.msg{
+  max-width:82%; padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.45;
+  box-shadow:0 1px 2px rgba(28,26,23,.12); animation:pop .4s ease backwards;
+}
+.msg.client{background:#fff; align-self:flex-start; border-bottom-left-radius:4px}
+.msg.aelyra{background:#F3E7CF; align-self:flex-end; border-bottom-right-radius:4px; border:1px solid rgba(164,83,39,.18)}
+.msg .tag{
+  display:block; font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--terracotta-deep); margin-bottom:4px;
+}
+.msg .time{display:block; text-align:right; font-size:10.5px; color:var(--encre-douce); opacity:.7; margin-top:4px}
+.msg.prio{border-left:3px solid var(--terracotta)}
+.prio-note{
+  align-self:center; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--terracotta-deep); background:rgba(201,111,63,.14); padding:6px 14px; border-radius:99px;
+}
+@keyframes pop{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+.msg:nth-child(2){animation-delay:.15s}.msg:nth-child(3){animation-delay:.3s}
+.prio-note{animation:pop .4s .45s ease backwards}
+.msg:nth-child(5){animation-delay:.6s}.msg:nth-child(6){animation-delay:.75s}
+/* ---------- bandeau chiffres ---------- */
+.band{background:var(--encre); color:var(--creme); padding:54px 0}
+.band-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; text-align:center}
+.band .n{font-family:'Fraunces',serif; font-size:46px; font-weight:700; color:var(--terracotta)}
+.band .l{font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.75; margin-top:6px}
+/* ---------- étapes ---------- */
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px}
+.step{
+  background:#fff; border-radius:var(--r); padding:34px 30px;
+  border:1px solid rgba(28,26,23,.08); position:relative;
+  box-shadow:0 6px 22px rgba(28,26,23,.05);
+}
+.step .num{
+  font-family:'Fraunces',serif; font-size:15px; font-weight:700; color:#fff;
+  background:var(--terracotta); width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+}
+.step h3{font-size:21px; margin-bottom:10px}
+.step p{color:var(--encre-douce); font-size:15px}
+.step .ico{font-size:30px; margin-bottom:14px; display:block}
+/* ---------- rapport du matin ---------- */
+.rapport{background:var(--creme)}
+.rapport-card{
+  background:#fff; border-radius:var(--r); max-width:640px; margin:44px auto 0;
+  border:1px solid rgba(28,26,23,.09); overflow:hidden;
+  box-shadow:0 24px 60px rgba(28,26,23,.1);
+}
+.rapport-head{
+  background:var(--encre); color:var(--creme); padding:22px 30px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.rapport-head b{font-family:'Fraunces',serif; font-size:19px}
+.rapport-head span{font-size:12px; letter-spacing:.16em; text-transform:uppercase; opacity:.7}
+.rapport-body{padding:10px 30px 28px}
+.rapport-row{
+  display:flex; align-items:center; gap:16px; padding:18px 0;
+  border-bottom:1px dashed rgba(28,26,23,.14); font-size:15px;
+}
+.rapport-row:last-child{border:none}
+.rapport-ico{
+  width:44px; height:44px; border-radius:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.ri-1{background:rgba(123,160,91,.16)} .ri-2{background:rgba(201,111,63,.14)} .ri-3{background:rgba(63,193,201,.14)}
+.rapport-row b{display:block; font-size:15px}
+.rapport-row small{color:var(--encre-douce)}
+.rapport-row .go{margin-left:auto; font-weight:700; color:var(--terracotta-deep); font-size:13px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap}
+/* ---------- Oxyne Z ---------- */
+.oxyne{background:var(--nuit); color:#EDE6D8; position:relative; overflow:hidden}
+.oxyne::before{
+  content:""; position:absolute; inset:0; opacity:.5; pointer-events:none;
+  background:radial-gradient(800px 400px at 12% 0%, rgba(63,193,201,.1), transparent 60%);
+}
+.oxyne .kicker{color:var(--cyan-clair)}
+.oxyne h2{color:#fff}
+.oxyne .sub{color:#B9AE97; max-width:60ch; margin-top:14px; font-size:17px}
+.alert-card{
+  background:var(--nuit2); border:1px solid rgba(63,193,201,.28); border-radius:var(--r);
+  padding:30px; margin-top:44px; max-width:720px; position:relative;
+}
+.alert-top{display:flex; align-items:center; gap:14px; margin-bottom:16px}
+.alert-dot{width:12px; height:12px; border-radius:50%; background:var(--alerte); box-shadow:0 0 0 6px rgba(208,85,69,.18); animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(208,85,69,.06)}}
+.alert-top .t{font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--alerte)}
+.alert-card h3{color:#fff; font-size:23px; margin-bottom:10px}
+.alert-card p{color:#B9AE97; font-size:15px; margin-bottom:8px}
+.alert-meta{display:flex; gap:22px; margin:18px 0 24px; flex-wrap:wrap}
+.alert-meta div{font-size:13px; color:#8E8271}
+.alert-meta b{display:block; color:var(--cyan-clair); font-size:14px; margin-top:2px}
+.alert-actions{display:flex; gap:14px; flex-wrap:wrap}
+.btn-cyan{background:var(--cyan); color:var(--nuit); font-weight:700}
+.btn-cyan:hover{background:var(--cyan-clair)}
+.btn-outline-w{background:transparent; color:#EDE6D8; border:1.5px solid rgba(237,230,216,.35)}
+.btn-outline-w:hover{border-color:var(--alerte); color:#fff}
+.oxyne-note{margin-top:22px; font-size:13.5px; color:#8E8271; display:flex; gap:10px; align-items:flex-start}
+.oxyne-note .lock{color:var(--cyan); font-size:16px}
+/* ---------- tarifs ---------- */
+.tarifs-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:52px; align-items:stretch}
+.tarif{
+  background:#fff; border-radius:var(--r); padding:38px 34px;
+  border:1px solid rgba(28,26,23,.1); display:flex; flex-direction:column;
+  box-shadow:0 8px 26px rgba(28,26,23,.05); position:relative;
+}
+.tarif.hl{
+  background:var(--encre); color:var(--creme); border:none;
+  box-shadow:0 26px 60px rgba(28,26,23,.25); transform:scale(1.03);
+}
+.tarif .plan{font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--terracotta-deep)}
+.tarif.hl .plan{color:var(--terracotta)}
+.tarif h3{font-size:30px; margin:10px 0 4px}
+.tarif.hl h3{color:#fff}
+.prix{font-family:'Fraunces',serif; font-size:42px; font-weight:700; margin:12px 0 2px}
+.prix small{font-size:15px; font-family:'Archivo',sans-serif; font-weight:500; color:var(--encre-douce)}
+.tarif.hl .prix small{color:#B9AE97}
+.tarif ul{list-style:none; margin:24px 0 30px; flex:1}
+.tarif li{padding:9px 0; font-size:14.5px; display:flex; gap:10px; align-items:flex-start; border-bottom:1px dashed rgba(28,26,23,.1)}
+.tarif.hl li{border-color:rgba(237,230,216,.14)}
+.tarif li .ok{color:var(--succes); font-weight:700; flex-shrink:0}
+.tarif li.off{opacity:.42}
+.tarif li.off .ok{color:var(--encre-douce)}
+.tarif .btn{justify-content:center}
+.flag{
+  position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+  background:var(--terracotta); color:#fff; font-size:11.5px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; padding:7px 20px; border-radius:99px; white-space:nowrap;
+}
+.tarif-note{text-align:center; margin-top:30px; color:var(--encre-douce); font-size:14.5px}
+/* ---------- FAQ ---------- */
+.faq{max-width:760px; margin:44px auto 0}
+details{
+  background:#fff; border:1px solid rgba(28,26,23,.1); border-radius:14px;
+  margin-bottom:14px; overflow:hidden;
+}
+summary{
+  padding:20px 26px; cursor:pointer; font-weight:700; font-size:16px; list-style:none;
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+}
+summary::-webkit-details-marker{display:none}
+summary .plus{color:var(--terracotta); font-size:22px; font-weight:400; flex-shrink:0; transition:transform .2s}
+details[open] summary .plus{transform:rotate(45deg)}
+details p{padding:0 26px 22px; color:var(--encre-douce); font-size:15px}
+/* ---------- footer ---------- */
+footer{background:var(--encre); color:#B9AE97; padding:64px 0 34px}
+.foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; margin-bottom:44px}
+.foot-grid .logo{color:var(--creme)}
+.foot-grid p{font-size:14px; margin-top:12px; max-width:34ch}
+.foot-grid h4{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--creme); margin-bottom:16px}
+.foot-grid a{color:#B9AE97; text-decoration:none; font-size:14.5px; display:block; padding:5px 0}
+.foot-grid a:hover{color:var(--terracotta)}
+.foot-num{font-family:'Fraunces',serif; font-size:22px; color:var(--creme); margin-top:6px}
+.foot-bottom{
+  border-top:1px solid rgba(237,230,216,.12); padding-top:24px;
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:13px;
+}
+.demo-tag{
+  display:inline-block; border:1px dashed rgba(63,193,201,.6); color:var(--cyan-clair);
+  font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; padding:6px 16px; border-radius:99px;
+}
+/* ---------- responsive ---------- */
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr}
+  .phone{margin:20px auto 0; transform:none}
+  .steps,.tarifs-grid{grid-template-columns:1fr; max-width:520px; margin-left:auto; margin-right:auto}
+  .tarif.hl{transform:none}
+  .band-grid{grid-template-columns:1fr; gap:34px}
+  nav.links{display:none}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></a>
+    <nav class="links">
+      <a href="#service">Le service</a>
+      <a href="#oxyne">Oxyne Z</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#tarifs" class="btn btn-primary nav-cta">Essai gratuit 7 jours</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">La réceptionniste des entreprises</span>
+      <h1>Vos clients accueillis.<br><em>Votre nom protégé.</em></h1>
+      <p class="lead">Aelyra répond à vos clients sur WhatsApp, prend vos rendez-vous et présente vos produits — pendant qu'Oxyne&nbsp;Z veille sur votre réputation, jour et nuit.</p>
+      <div class="hero-ctas">
+        <a href="#tarifs" class="btn btn-primary">Essai gratuit 7 jours</a>
+        <a href="#service" class="btn btn-ghost">Voir comment ça marche</a>
+      </div>
+      <p class="hero-note"><span class="dot"></span> Sans carte bancaire · Sans engagement · En français</p>
+    </div>
+    <div class="phone" aria-label="Démonstration : conversation WhatsApp avec Aelyra">
+      <div class="phone-screen">
+        <div class="chat-head">
+          <div class="avatar">A</div>
+          <div class="who">
+            <b>Aelyra · Salon Kadi Coiffure</b>
+            <span class="ia-badge">◉ Je suis une IA</span>
+          </div>
+        </div>
+        <div class="chat-body">
+          <div class="msg client prio">Bonjour, vous coiffez samedi à 10h ?<span class="time">09:41</span></div>
+          <div class="msg aelyra"><span class="tag">Aelyra</span>Bonjour ! Oui, samedi 10h est libre. Je vous le réserve au nom de ?<span class="time">09:41</span></div>
+          <div class="msg client">Awa, merci !<span class="time">09:42</span></div>
+          <div class="prio-note">Message prioritaire traité</div>
+          <div class="msg client">cc<span class="time">09:42</span></div>
+          <div class="msg aelyra"><span class="tag">Aelyra</span>Bonjour ! Bienvenue au Salon Kadi Coiffure. Que puis-je faire pour vous ?<span class="time">09:44</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap band-grid">
+    <div><div class="n">7</div><div class="l">jours d'essai gratuit</div></div>
+    <div><div class="n">3</div><div class="l">offres, de 6 000 F à 60 000 F</div></div>
+    <div><div class="n">0</div><div class="l">carte bancaire requise</div></div>
+  </div>
+</div>
+
+<section id="service">
+  <div class="wrap">
+    <span class="kicker">Le service</span>
+    <h2 style="font-size:clamp(30px,3.4vw,44px); max-width:22ch">Elle répond d'abord à l'urgent.<br>Elle n'oublie jamais personne.</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="ico">📲</span>
+        <div class="num">1</div>
+        <h3>Connectez votre WhatsApp</h3>
+        <p>On relie le numéro professionnel de votre entreprise en quelques minutes. Vous ne changez rien à vos habitudes.</p>
+      </div>
+      <div class="step">
+        <span class="ico">💬</span>
+        <div class="num">2</div>
+        <h3>Aelyra accueille vos clients</h3>
+        <p>Elle trie les messages par priorité, prend les rendez-vous, présente vos produits et envoie les liens de paiement Mobile Money. Elle dit toujours qu'elle est une IA.</p>
+      </div>
+      <div class="step">
+        <span class="ico">🌅</span>
+        <div class="num">3</div>
+        <h3>Recevez le rapport du matin</h3>
+        <p>Chaque matin, un résumé clair : qui a écrit, quels rendez-vous pris, qui relancer. Vous gardez la main, sans passer vos journées sur le téléphone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rapport">
+  <div class="wrap">
+    <span class="kicker" style="text-align:center; display:block">Exemple de rapport</span>
+    <h2 style="font-size:clamp(30px,3.4vw,44px); text-align:center">Le rapport du matin</h2>
+    <div class="rapport-card">
+      <div class="rapport-head">
+        <b>☀️ Rapport — Salon Kadi Coiffure</b>
+        <span>mardi 13 oct.</span>
+      </div>
+      <div class="rapport-body">
+        <div class="rapport-row">
+          <div class="rapport-ico ri-1">✅</div>
+          <div><b>14 messages traités</b><small>dont 3 demandes de rendez-vous</small></div>
+          <span class="go">voir</span>
+        </div>
+        <div class="rapport-row">
+          <div class="rapport-ico ri-2">📅</div>
+          <div><b>3 rendez-vous pris</b><small>sam. 10h (Awa) · sam. 14h (Mariam) · lun. 9h (Ibrahim)</small></div>
+          <span class="go">voir</span>
+        </div>
+        <div class="rapport-row">
+          <div class="rapport-ico ri-3">🔔</div>
+          <div><b>2 clients à relancer</b><small>devis coiffure mariage sans réponse depuis 2 jours</small></div>
+          <span class="go">relancer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="oxyne" id="oxyne">
+  <div class="wrap">
+    <span class="kicker">Oxyne Z · module premium</span>
+    <h2 style="font-size:clamp(30px,3.4vw,44px); max-width:24ch">Quelqu'un usurpe votre nom&nbsp;? Vous le saurez avant vos clients.</h2>
+    <p class="sub">Oxyne&nbsp;Z surveille les fausses pages, les faux comptes et les usages frauduleux de votre numéro professionnel sur les réseaux. Quand il détecte quelque chose, il réunit les preuves et prépare le signalement — puis attend <b>votre accord</b> avant tout envoi.</p>
+    <div class="alert-card">
+      <div class="alert-top">
+        <span class="alert-dot"></span>
+        <span class="t">Alerte Oxyne Z · exemple</span>
+      </div>
+      <h3>Fausse page détectée</h3>
+      <p>Une page « Salon Kadi Coiffure Officiel » utilise vos photos et votre numéro pour arnaquer des clients. Le signalement est prêt — <b>en attente de votre accord</b>.</p>
+      <div class="alert-meta">
+        <div>Plateforme<b>Facebook</b></div>
+        <div>Preuves réunies<b>6 captures · 2 liens</b></div>
+        <div>Détectée le<b>12 oct. à 22:14</b></div>
+      </div>
+      <div class="alert-actions">
+        <button class="btn btn-cyan" type="button">Valider le signalement</button>
+        <button class="btn btn-outline-w" type="button">Rejeter</button>
+      </div>
+    </div>
+    <p class="oxyne-note"><span class="lock">🔒</span><span>Oxyne&nbsp;Z ne signale jamais sans votre validation. Vous restez le seul décideur.</span></p>
+  </div>
+</section>
+
+<section id="tarifs">
+  <div class="wrap">
+    <span class="kicker" style="text-align:center; display:block">Tarifs</span>
+    <h2 style="font-size:clamp(30px,3.4vw,44px); text-align:center">Un prix clair, sans surprise</h2>
+    <p style="text-align:center; color:var(--encre-douce); margin-top:12px">7 jours d'essai gratuits sur toutes les offres, sans carte bancaire.</p>
+    <div class="tarifs-grid">
+      <div class="tarif">
+        <span class="plan">Essentiel</span>
+        <h3>Pour démarrer</h3>
+        <div class="prix">6 000 F<small> / mois</small></div>
+        <ul>
+          <li><span class="ok">✓</span> Réception WhatsApp intelligente</li>
+          <li><span class="ok">✓</span> Prise de rendez-vous</li>
+          <li><span class="ok">✓</span> Catalogue produits</li>
+          <li><span class="ok">✓</span> Liens de paiement Mobile Money</li>
+          <li><span class="ok">✓</span> Rapport du matin</li>
+          <li class="off"><span class="ok">–</span> Publication auto sur les réseaux</li>
+          <li class="off"><span class="ok">–</span> Oxyne Z · veille anti-usurpation</li>
+          <li class="off"><span class="ok">–</span> Appels vocaux</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Choisir Essentiel</a>
+      </div>
+      <div class="tarif">
+        <span class="plan">Pro</span>
+        <h3>Pour se faire voir</h3>
+        <div class="prix">10 000 F<small> / mois</small></div>
+        <ul>
+          <li><span class="ok">✓</span> Tout Essentiel, plus :</li>
+          <li><span class="ok">✓</span> Publication auto Facebook / Instagram</li>
+          <li><span class="ok">✓</span> TikTok (après validation TikTok)</li>
+          <li><span class="ok">✓</span> Publications validées par vous avant envoi</li>
+          <li><span class="ok">✓</span> Relances clients automatiques</li>
+          <li class="off"><span class="ok">–</span> Oxyne Z · veille anti-usurpation</li>
+          <li class="off"><span class="ok">–</span> Appels vocaux</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Choisir Pro</a>
+      </div>
+      <div class="tarif hl">
+        <span class="flag">Le plus complet</span>
+        <span class="plan">Premium</span>
+        <h3>Protégé à 360°</h3>
+        <div class="prix">60 000 F<small> / mois</small></div>
+        <ul>
+          <li><span class="ok">✓</span> Tout Pro, plus :</li>
+          <li><span class="ok">✓</span> Oxyne Z complet · veille anti-usurpation</li>
+          <li><span class="ok">✓</span> Signalements préparés, validés par vous</li>
+          <li><span class="ok">✓</span> Appels vocaux WhatsApp (Aelyra complète)</li>
+          <li><span class="ok">✓</span> Support prioritaire</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Choisir Premium</a>
+      </div>
+    </div>
+    <p class="tarif-note">Paiement par Mobile Money, mois par mois. Sans engagement.</p>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--creme)">
+  <div class="wrap">
+    <span class="kicker" style="text-align:center; display:block">Questions fréquentes</span>
+    <h2 style="font-size:clamp(30px,3.4vw,44px); text-align:center">On vous dit tout</h2>
+    <div class="faq">
+      <details>
+        <summary>Aelyra est-elle vraiment une intelligence artificielle ? <span class="plus">+</span></summary>
+        <p>Oui — et elle le dit dès son premier message à vos clients, sans détour. Pas de faux humain : la confiance commence par l'honnêteté.</p>
+      </details>
+      <details>
+        <summary>Faut-il une carte bancaire pour l'essai gratuit ? <span class="plus">+</span></summary>
+        <p>Non. Les 7 jours d'essai sont gratuits et sans carte. À la fin, vous choisissez de continuer ou non — on ne vous prélève jamais par surprise.</p>
+      </details>
+      <details>
+        <summary>Comment Oxyne Z protège-t-il mon entreprise ? <span class="plus">+</span></summary>
+        <p>Il surveille les fausses pages, les faux comptes et les usages frauduleux de votre numéro sur les réseaux sociaux. S'il détecte une usurpation, il réunit les preuves et prépare le signalement — mais n'envoie rien sans votre accord explicite.</p>
+      </details>
+      <details>
+        <summary>Mes conversations sont-elles mélangées avec celles d'autres entreprises ? <span class="plus">+</span></summary>
+        <p>Jamais. Chaque entreprise a son propre environnement, totalement cloisonné : vos clients, vos messages et vos données ne croisent jamais ceux d'un autre commerçant.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></a>
+        <p>Vos clients accueillis. Votre nom protégé.<br>La réceptionniste IA des entreprises, par DIGITALE BUSINESSE.</p>
+        <div class="foot-num">05-95-53-28-84</div>
+      </div>
+      <div>
+        <h4>Le service</h4>
+        <a href="#service">Comment ça marche</a>
+        <a href="#oxyne">Oxyne Z</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Entreprise</h4>
+        <a href="#">DIGITALE BUSINESSE</a>
+        <a href="#">Nous contacter</a>
+        <a href="#">Conditions d'utilisation</a>
+        <a href="#">Confidentialité</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 DIGITALE BUSINESSE — Tous droits réservés.</span>
+      <span class="demo-tag">Démo visuelle · maquette de démonstration</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
