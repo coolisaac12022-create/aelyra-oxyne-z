@@ -138,6 +138,12 @@ function axz_page_dashboard() {
 		<div class="axz-note">
 			<?php esc_html_e( 'Le MRR compte uniquement les abonnements au statut « Actif ». Les essais gratuits ne sont pas comptés tant qu\u2019ils ne sont pas validés dans l\u2019onglet Clients.', 'axz' ); ?>
 		</div>
+		<?php
+		/* Widget plafonds de coût (extensions) : alertes de dépassement. */
+		if ( function_exists( 'axz_render_alerte_plafonds' ) ) {
+			axz_render_alerte_plafonds();
+		}
+		?>
 	</div>
 	<?php
 }
@@ -275,6 +281,10 @@ function axz_handle_client_actions() {
 		wp_die( esc_html__( 'Client introuvable.', 'axz' ) );
 	}
 	update_user_meta( $user_id, 'axz_statut', $map[ $action ] );
+	if ( function_exists( 'axz_log' ) ) {
+		$statuts = axz_statuts();
+		axz_log( $user_id, 'client_' . $action, sprintf( __( 'Statut passé à « %s ».', 'axz' ), $statuts[ $map[ $action ] ] ) );
+	}
 	wp_safe_redirect( add_query_arg(
 		array( 'page' => 'axz-clients', 'axz_msg' => 'ok' ),
 		admin_url( 'admin.php' )
@@ -331,6 +341,11 @@ function axz_handle_abonnement_update() {
 	}
 	update_user_meta( $user_id, 'axz_offre', $offre );
 	update_user_meta( $user_id, 'axz_statut', $statut );
+	if ( function_exists( 'axz_log' ) ) {
+		$offres  = axz_offres();
+		$statuts = axz_statuts();
+		axz_log( $user_id, 'abonnement_modifie', sprintf( __( 'Offre : %s — Statut : %s.', 'axz' ), $offres[ $offre ]['label'], $statuts[ $statut ] ) );
+	}
 	wp_safe_redirect( add_query_arg(
 		array( 'page' => 'axz-abonnements', 'axz_msg' => 'ok' ),
 		admin_url( 'admin.php' )
