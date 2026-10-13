@@ -18,6 +18,18 @@
 .axz-badge.essai{background:#F6E7D7;color:#A45327}
 .axz-badge.actif{background:#E4EEDB;color:#3E5C2E}
 .axz-badge.suspendu{background:#F7DDD6;color:#8F2F24}
+.axz-badge.a_jour{background:#E4EEDB;color:#3E5C2E}
+.axz-badge.en_attente{background:#F6E7D7;color:#A45327}
+.axz-badge.validee{background:#E4EEDB;color:#3E5C2E}
+.axz-badge.rejetee{background:#F7DDD6;color:#8F2F24}
+.axz-alert-box{
+  background:#FBF8F1;border:1px solid #E4DCCB;border-radius:14px;
+  padding:18px 22px;max-width:1200px;margin:0 0 18px;
+}
+.axz-alert-box .s-tag{font-size:11px;letter-spacing:.14em;font-weight:700;color:#A45327}
+.axz-alert-box .s-sub{font-size:13.5px;color:#4A443C;margin:8px 0 0}
+.axz-alert-box ul{margin:8px 0 0;padding-left:18px}
+.axz-alert-box li{margin:4px 0;font-size:13.5px;color:#8F2F24}
 .axz-note{
   background:#FBF8F1;border:1px dashed #C96F3F;border-radius:12px;
   padding:14px 18px;max-width:1200px;margin:18px 0;font-size:13.5px;color:#4A443C;
