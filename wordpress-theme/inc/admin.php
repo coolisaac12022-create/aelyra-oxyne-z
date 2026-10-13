@@ -260,9 +260,11 @@ function axz_handle_client_actions() {
 	if ( ! isset( $_GET['axz_action'] ) ) {
 		return;
 	}
-	check_admin_referer( 'axz_client_action' );
+	/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+	axz_verify_nonce_log( 'axz_client_action' );
 	if ( ! current_user_can( 'axz_manage_clients' ) ) {
-		wp_die( esc_html__( 'Accès refusé.', 'axz' ) );
+		axz_sec_log( 'acces_interdit', 'axz-clients', __( 'Action client sans la capacité requise.', 'axz' ) );
+		wp_die( esc_html__( 'Accès refusé.', 'axz' ), '', array( 'response' => 403 ) );
 	}
 	$action = sanitize_key( wp_unslash( $_GET['axz_action'] ) );
 	$map    = array(
@@ -324,9 +326,11 @@ function axz_handle_abonnement_update() {
 	if ( ! isset( $_POST['axz_abonnement_submit'] ) ) {
 		return;
 	}
-	check_admin_referer( 'axz_abonnement', 'axz_abonnement_nonce' );
+	/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+	axz_verify_nonce_log( 'axz_abonnement', 'axz_abonnement_nonce' );
 	if ( ! current_user_can( 'axz_manage_subscriptions' ) ) {
-		wp_die( esc_html__( 'Accès refusé.', 'axz' ) );
+		axz_sec_log( 'acces_interdit', 'axz-abonnements', __( 'Abonnement modifié sans la capacité requise.', 'axz' ) );
+		wp_die( esc_html__( 'Accès refusé.', 'axz' ), '', array( 'response' => 403 ) );
 	}
 	$user_id = isset( $_POST['axz_user_id'] ) ? absint( $_POST['axz_user_id'] ) : 0;
 	$user    = get_user_by( 'id', $user_id );

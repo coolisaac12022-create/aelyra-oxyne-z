@@ -164,7 +164,8 @@ function axz_page_essais() {
 
 	/* Traitement : « Marquer relancé ». */
 	if ( isset( $_POST['axz_relance_submit'] ) ) {
-		check_admin_referer( 'axz_relance', 'axz_relance_nonce' );
+		/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+		axz_verify_nonce_log( 'axz_relance', 'axz_relance_nonce' );
 		if ( ! current_user_can( 'axz_manage_clients' ) ) {
 			wp_die( esc_html__( 'Accès refusé.', 'axz' ) );
 		}
@@ -269,7 +270,8 @@ function axz_page_paiements() {
 	}
 
 	if ( isset( $_POST['axz_paiement_submit'] ) ) {
-		check_admin_referer( 'axz_paiement', 'axz_paiement_nonce' );
+		/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+		axz_verify_nonce_log( 'axz_paiement', 'axz_paiement_nonce' );
 		if ( ! current_user_can( 'axz_manage_subscriptions' ) ) {
 			wp_die( esc_html__( 'Accès refusé.', 'axz' ) );
 		}
@@ -443,7 +445,8 @@ function axz_page_alertes_oxyne() {
 
 	/* Traitement : Valider / Rejeter une alerte. */
 	if ( isset( $_GET['axz_oxyne_action'] ) ) {
-		check_admin_referer( 'axz_oxyne_alerte' );
+		/* Nonce vérifié à la main : un échec est journalisé (nonce_invalide). */
+		axz_verify_nonce_log( 'axz_oxyne_alerte' );
 		if ( ! current_user_can( 'axz_manage_clients' ) ) {
 			wp_die( esc_html__( 'Accès refusé.', 'axz' ) );
 		}

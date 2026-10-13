@@ -67,6 +67,10 @@ function axz_redirect_non_admins() {
 	if ( current_user_can( 'manage_options' ) ) {
 		return;
 	}
+	/* Journalisé : un client qui tente wp-admin, c'est suspect. */
+	if ( function_exists( 'axz_sec_log' ) ) {
+		axz_sec_log( 'acces_interdit', 'wp-admin', __( 'Tentative d\u2019accès à wp-admin par un compte client.', 'axz' ) );
+	}
 	wp_safe_redirect( home_url( '/espace-client/' ) );
 	exit;
 }
