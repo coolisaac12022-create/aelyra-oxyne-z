@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registre Santé — Le registre du dispensaire et de la maternité</title>
+<meta name="description" content="Le registre du dispensaire et de la maternité, sur téléphone et sur papier. Saisie simple, totaux calculés seuls, rapport prêt à imprimer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vert:#0E6B4A; --vert-profond:#0A4D36; --vert-tendre:#E4F1EA;
+  --encre:#12201A; --papier:#F6F7F4; --blanc:#FFFFFF; --bordure:#CAD5CE; --attenue:#4F6258;
+  --soleil:#E8830C; --soleil-pale:#FCEBD2; --soleil-texte:#7A4300;
+  --alerte:#B3261E; --alerte-pale:#FBE4E1;
+  --radius-card:12px; --radius-btn:8px;
+  --maxw:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Public Sans',system-ui,-apple-system,sans-serif;color:var(--encre);background:var(--papier);line-height:1.6;font-size:17px}
+h1,h2,h3{font-family:'Bricolage Grotesque','Public Sans',sans-serif;line-height:1.12;letter-spacing:-0.01em}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+img{max-width:100%;display:block}
+a{color:var(--vert)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--vert);color:#fff;padding:12px 18px;z-index:100;border-radius:0 0 8px 0}
+.skip:focus{left:0}
+/* ---------- header ---------- */
+.site-head{position:sticky;top:0;z-index:50;background:var(--blanc);border-bottom:1px solid var(--bordure)}
+.site-head .wrap{display:flex;align-items:center;gap:16px;min-height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--encre)}
+.brand-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px}
+.nav{display:none;gap:24px;margin-left:auto}
+.nav a{text-decoration:none;color:var(--encre);font-weight:500;font-size:16px}
+.nav a:hover{color:var(--vert)}
+.head-cta{margin-left:auto}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 26px;border-radius:var(--radius-btn);font-family:'Public Sans',sans-serif;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn-primary{background:var(--vert);color:#fff}
+.btn-primary:hover{background:var(--vert-profond)}
+.btn-light{background:var(--blanc);color:var(--vert-profond)}
+.btn-light:hover{background:var(--vert-tendre)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn-outline{background:transparent;color:var(--vert);border-color:var(--vert)}
+.btn-outline:hover{background:var(--vert-tendre)}
+/* ---------- hero ---------- */
+.hero{background:var(--vert-profond);color:#fff;overflow:hidden}
+.hero .wrap{display:grid;gap:32px;padding-top:56px;padding-bottom:56px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#cfe3d6;margin-bottom:18px}
+.hero h1{font-size:clamp(2.3rem,7.5vw,3.1rem);font-weight:700;margin-bottom:20px;max-width:16ch}
+.hero h1 .hl{color:#fff;text-decoration:underline;text-decoration-color:var(--soleil);text-decoration-thickness:6px;text-underline-offset:8px}
+.hero .lede{font-size:19px;color:#dcebe2;max-width:44ch;margin-bottom:32px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px}
+.hero-note{display:inline-flex;align-items:center;gap:10px;font-size:15px;color:#dcebe2;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:10px 18px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--soleil);flex-shrink:0}
+.hero-media{position:relative}
+.hero-media img{border-radius:var(--radius-card);aspect-ratio:4/3;object-fit:cover;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.hero-media figcaption{margin-top:12px;font-size:14px;color:#bcd4c4}
+/* ---------- band chiffres ---------- */
+.band{background:var(--papier);border-bottom:1px solid var(--bordure)}
+.band .wrap{padding-top:44px;padding-bottom:44px}
+.band-kicker{font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--vert);margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--bordure);border:1px solid var(--bordure);border-radius:var(--radius-card);overflow:hidden;margin-top:24px}
+.stat{background:var(--blanc);padding:24px 22px}
+.stat .v{font-size:clamp(2rem,5vw,2.9rem);font-weight:600;color:var(--vert-profond);text-align:left;line-height:1.1}
+.stat .l{font-size:15px;color:var(--attenue);margin-top:6px}
+/* ---------- sections communes ---------- */
+section.block{padding:72px 0}
+.sec-kicker{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--vert);margin-bottom:12px}
+.sec-title{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:700;margin-bottom:14px;max-width:22ch}
+.sec-intro{font-size:18px;color:var(--attenue);max-width:62ch;margin-bottom:36px}
+.tag{display:inline-block;font-size:13px;font-weight:600;border:1px dashed var(--attenue);color:var(--attenue);border-radius:999px;padding:6px 14px;margin-bottom:20px}
+/* ---------- dualité téléphone / papier ---------- */
+.duo{display:grid;gap:24px}
+.card{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--radius-card);overflow:hidden}
+.card .card-media img{aspect-ratio:16/10;object-fit:cover;width:100%}
+.card-body{padding:28px}
+.card-body h3{font-size:1.45rem;margin-bottom:10px}
+.card-body p{color:var(--attenue);font-size:16.5px}
+.card-flag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vert-profond);margin-bottom:12px}
+.sq{width:12px;height:12px;background:var(--soleil);flex-shrink:0}
+/* feuille papier (maquette imprimée) */
+.paper-sheet{background:#fff;border:1px solid #9aa5a0;padding:26px 26px 20px;font-size:14px}
+.paper-sheet .ps-head{border-bottom:3px solid #12201A;padding-bottom:12px;margin-bottom:14px}
+.paper-sheet .ps-head strong{font-family:'Bricolage Grotesque',sans-serif;font-size:18px}
+.paper-sheet .ps-head span{display:block;color:#333;font-size:13px;margin-top:4px}
+.ps-table{width:100%;border-collapse:collapse}
+.ps-table th,.ps-table td{border:1px solid #555;text-align:left;padding:8px 10px;font-size:13.5px}
+.ps-table th{background:#eee;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.ps-table td.num,.ps-table th.num{text-align:right}
+.ps-table tr.total td{font-weight:700;background:#eee}
+/* ---------- terrain ---------- */
+.terrain{background:var(--vert-tendre)}
+.feats{display:grid;gap:20px}
+.feat{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--radius-card);padding:28px}
+.feat .picto{width:44px;height:44px;border-radius:12px;background:var(--vert-tendre);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat h3{font-size:1.3rem;margin-bottom:8px}
+.feat p{color:var(--attenue);font-size:16px}
+/* ---------- saisie ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:20px;font-size:15px;color:var(--attenue)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sw{width:18px;height:18px;border:1px solid var(--bordure);background:#fff;flex-shrink:0}
+.sw.calc{background:var(--vert-tendre)}
+.table-scroll{overflow-x:auto;border:1px solid var(--bordure);border-radius:var(--radius-card);background:#fff}
+table.saisie{width:100%;min-width:620px;border-collapse:collapse;background:#fff}
+table.saisie th,table.saisie td{border:1px solid var(--bordure);padding:0;text-align:right}
+table.saisie th{background:var(--vert-tendre);color:var(--vert-profond);font-size:13px;text-transform:uppercase;letter-spacing:.08em;padding:14px 16px;text-align:right}
+table.saisie th:first-child,table.saisie td.week{text-align:left}
+table.saisie td.week{padding:14px 16px;font-weight:700}
+table.saisie td.cell-input{padding:0}
+table.saisie input{width:100%;border:0;background:#fff;min-height:60px;padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-size:19px;text-align:right;color:var(--encre)}
+table.saisie input:focus{outline:3px solid var(--vert);outline-offset:-3px}
+table.saisie td.calc{background:var(--vert-tendre);padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;color:var(--vert-profond)}
+table.saisie tr.total td{background:var(--vert-profond);color:#fff;font-weight:700;padding:16px;font-family:'IBM Plex Mono',monospace;font-size:19px}
+table.saisie tr.total td.week{font-family:'Public Sans',sans-serif}
+.formule{display:flex;gap:10px;align-items:flex-start;margin:18px 0 26px;font-size:15.5px;color:var(--attenue);max-width:70ch}
+.saisie-actions{display:flex;flex-wrap:wrap;gap:14px}
+/* ---------- rapport ---------- */
+.rapport{background:var(--vert-profond);color:#fff}
+.rapport .sec-kicker{color:#9fd0b4}
+.rapport .sec-title{color:#fff}
+.rapport .sec-intro{color:#cfe3d6}
+.rapport-lede{font-size:clamp(1.25rem,3.4vw,1.7rem);line-height:1.7;max-width:34ch;margin-bottom:36px}
+.rapport-lede .num{font-size:1.35em;font-weight:600;color:#fff}
+table.maladies{width:100%;border-collapse:collapse;background:#fff;color:var(--encre);border-radius:var(--radius-card);overflow:hidden}
+table.maladies th,table.maladies td{padding:15px 20px;border-bottom:1px solid var(--bordure);text-align:left;font-size:16.5px}
+table.maladies th{background:var(--vert-tendre);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--vert-profond)}
+table.maladies td.num,table.maladies th.num{text-align:right}
+table.maladies tr.total td{background:var(--vert-tendre);font-weight:700}
+.obs{margin-top:24px;background:var(--soleil-pale);border:1px solid var(--soleil-pale);color:var(--soleil-texte);border-radius:var(--radius-card);padding:22px 24px;font-size:16.5px}
+.obs strong{display:block;margin-bottom:4px}
+.rapport .btn{margin-top:28px}
+/* ---------- états ---------- */
+.etats-grid{display:grid;gap:20px}
+.etat{background:#fff;border:1px solid var(--bordure);border-radius:var(--radius-card);padding:28px}
+.etat .signe{font-size:26px;font-weight:700;display:block;margin-bottom:10px}
+.etat .mot{font-size:20px;font-weight:700;font-family:'Bricolage Grotesque',sans-serif;display:block;margin-bottom:6px}
+.etat p{color:var(--attenue);font-size:16px}
+.etat.ok .signe,.etat.ok .mot{color:var(--vert)}
+.etat.warn{background:var(--soleil-pale);border-color:var(--soleil-pale)}
+.etat.warn .signe,.etat.warn .mot{color:var(--soleil-texte)}
+.etat.rupt{background:var(--alerte-pale);border-color:var(--alerte-pale)}
+.etat.rupt .signe,.etat.rupt .mot{color:var(--alerte)}
+/* ---------- impression ---------- */
+.print-demo{display:grid;gap:32px;align-items:start}
+.print-actions .btn{margin-top:20px}
+.bw-note{margin-top:16px;color:var(--attenue);font-size:16px;max-width:44ch}
+/* ---------- démo ---------- */
+.demo{background:var(--vert-tendre)}
+.demo-card{background:#fff;border:1px solid var(--bordure);border-radius:var(--radius-card);padding:32px;max-width:640px}
+.demo-card h3{font-size:1.5rem;margin-bottom:6px}
+.demo-card .tag{margin:12px 0 22px}
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.field input,.field textarea{width:100%;border:1px solid var(--bordure);border-radius:8px;min-height:52px;padding:12px 16px;font-family:'Public Sans',sans-serif;font-size:16px;color:var(--encre);background:#fff}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:3px solid var(--vert);outline-offset:-1px;border-color:var(--vert)}
+.form-ok{font-size:19px}
+/* ---------- footer ---------- */
+footer{background:var(--vert-profond);color:#dcebe2}
+footer .wrap{padding-top:44px;padding-bottom:44px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+footer .brand-name{color:#fff}
+footer p{font-size:14.5px;color:#a9c6b2;max-width:52ch}
+/* ---------- print ---------- */
+@media print{
+  .site-head,.hero-media,.hero-ctas,.saisie-actions,.demo,.obs .btn,footer .btn,.skip{display:none!important}
+  body{background:#fff}
+  .hero,.rapport{background:#fff!important;color:#000!important}
+  .hero h1,.hero .lede,.rapport .sec-title,.rapport .sec-intro,.rapport-lede,.rapport-lede .num{color:#000!important}
+  section.block{padding:24px 0}
+}
+/* ---------- tablette ---------- */
+@media (min-width:768px){
+  .nav{display:flex}
+  .head-cta{margin-left:0}
+  .hero .wrap{grid-template-columns:1.05fr .95fr;align-items:center;padding-top:72px;padding-bottom:72px}
+  .hero h1{font-size:clamp(2.6rem,5vw,3.6rem)}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .duo{grid-template-columns:1fr 1fr}
+  .feats{grid-template-columns:repeat(3,1fr)}
+  .etats-grid{grid-template-columns:repeat(3,1fr)}
+  .print-demo{grid-template-columns:1fr 1fr}
+  section.block{padding:96px 0}
+}
+/* ---------- ordinateur ---------- */
+@media (min-width:1024px){
+  .wrap{padding:0 32px}
+  .hero .wrap{padding-top:96px;padding-bottom:96px}
+  .hero h1{font-size:4.2rem}
+  .hero .lede{font-size:21px}
+  table.saisie input,table.saisie td.calc{font-size:21px;min-height:68px}
+  .sec-title{font-size:3rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#haut" aria-label="Registre Santé — accueil">
+      <svg width="40" height="40" viewBox="0 0 48 48" role="img" aria-label="Logo Registre Santé"><rect width="48" height="48" rx="12" fill="#0E6B4A"/><g fill="#FFFFFF" fill-opacity="0.35"><rect x="6" y="6" width="10" height="10" rx="2"/><rect x="32" y="6" width="10" height="10" rx="2"/><rect x="6" y="32" width="10" height="10" rx="2"/><rect x="32" y="32" width="10" height="10" rx="2"/></g><g fill="#FFFFFF"><rect x="19" y="6" width="10" height="10" rx="2"/><rect x="6" y="19" width="10" height="10" rx="2"/><rect x="32" y="19" width="10" height="10" rx="2"/><rect x="19" y="32" width="10" height="10" rx="2"/></g><rect x="19" y="19" width="10" height="10" rx="2" fill="#E8830C"/></svg>
+      <span class="brand-name">Registre Santé</span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#registre">Le registre</a>
+      <a href="#saisie">Saisie</a>
+      <a href="#rapport">Rapport</a>
+      <a href="#etats">États</a>
+      <a href="#impression">Impression</a>
+    </nav>
+    <a class="btn btn-primary head-cta" href="#demo">Demander une démo</a>
+  </div>
+</header>
+
+<main id="contenu">
+<!-- ============ HERO ============ -->
+<section class="hero" id="haut">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Dispensaire · Maternité</p>
+      <h1>Le registre du dispensaire et de la maternité, <span class="hl">sur téléphone et sur papier.</span></h1>
+      <p class="lede">Saisissez les chiffres du mois. Les cases vertes se calculent seules. Le rapport est prêt à imprimer.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-light" href="#demo">Demander une démo</a>
+        <a class="btn btn-ghost" href="#saisie">Voir la saisie</a>
+      </div>
+      <p class="hero-note"><span class="dot" aria-hidden="true"></span>Fonctionne sans connexion. Pensé pour le terrain.</p>
+    </div>
+    <figure class="hero-media">
+      <img src="img/sage-femme-registre.jpg" alt="Sage-femme remplissant le registre papier du dispensaire" width="1200" height="900">
+      <figcaption>Le registre papier, chaque jour, au dispensaire.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ CHIFFRES ============ -->
+<div class="band">
+  <div class="wrap">
+    <p class="band-kicker">Octobre 2026 · Site 1</p>
+    <span class="tag">Données d'exemple</span>
+    <div class="stats">
+      <div class="stat"><p class="v num">2 517</p><p class="l">Population suivie</p></div>
+      <div class="stat"><p class="v num">328</p><p class="l">Consultations</p></div>
+      <div class="stat"><p class="v num">17</p><p class="l">Accouchements</p></div>
+      <div class="stat"><p class="v num">83 %</p><p class="l">Vaccination</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DUALITÉ ============ -->
+<section class="block" id="registre">
+  <div class="wrap">
+    <p class="sec-kicker">Le registre</p>
+    <h2 class="sec-title">Deux outils. Un seul registre.</h2>
+    <p class="sec-intro">Le téléphone pour saisir au chevet. Le papier pour garder la trace et imprimer. Les deux disent la même chose.</p>
+    <div class="duo">
+      <article class="card">
+        <div class="card-media">
+          <img src="img/infirmier-telephone.jpg" alt="Infirmier consultant le registre sur son téléphone devant le dispensaire" width="1200" height="750" loading="lazy">
+        </div>
+        <div class="card-body">
+          <p class="card-flag">Sur téléphone</p>
+          <h3>Saisie au chevet, sans attendre.</h3>
+          <p>On écrit dans les cases blanches. Les vertes se calculent seules. Même sans connexion, rien ne se perd.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-media" style="padding:26px 26px 0">
+          <div class="paper-sheet" aria-label="Aperçu de la feuille imprimée">
+            <div class="ps-head"><strong>Registre Santé — feuille mensuelle</strong><span>Site 1 · Octobre 2026 · Infirmier : ______</span></div>
+            <table class="ps-table">
+              <thead><tr><th>Consultations par maladie</th><th class="num">N</th></tr></thead>
+              <tbody>
+                <tr><td>Paludisme</td><td class="num">131</td></tr>
+                <tr><td>Infections respiratoires</td><td class="num">74</td></tr>
+                <tr><td>Diarrhées</td><td class="num">39</td></tr>
+                <tr><td>Plaies et autres</td><td class="num">84</td></tr>
+                <tr class="total"><td>Σ Total</td><td class="num">328</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-flag"><span class="sq" aria-hidden="true"></span>Sur papier</p>
+          <h3>La feuille part à l'impression.</h3>
+          <p>Fond blanc, traits noirs, en-tête complet. Sobre, même sans couleur. Rien ne se perd sur l'imprimante du district.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TERRAIN ============ -->
+<section class="block terrain">
+  <div class="wrap">
+    <p class="sec-kicker">Pensé pour le terrain</p>
+    <h2 class="sec-title">Un registre, c'est du concret.</h2>
+    <p class="sec-intro">Des cases. Des chiffres. Une feuille qui part à l'impression. Pas de jargon, pas de détour.</p>
+    <div class="feats">
+      <article class="feat">
+        <div class="picto" aria-hidden="true"><span class="dot" style="width:18px;height:18px"></span></div>
+        <h3>Lisible en plein soleil</h3>
+        <p>Contrastes forts. Texte de saisie en 16 px minimum. Boutons de 48 px, faciles à viser même avec des gants.</p>
+      </article>
+      <article class="feat">
+        <div class="picto" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E6B4A" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </div>
+        <h3>Pensé pour l'impression</h3>
+        <p>En noir et blanc, chaque état porte un mot ou un signe. Jamais la couleur seule.</p>
+      </article>
+      <article class="feat">
+        <div class="picto" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E6B4A" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7" fill="#0E6B4A" fill-opacity="0.25"/></svg>
+        </div>
+        <h3>Les chiffres d'abord</h3>
+        <p>Cases blanches pour écrire. Cases vertes qui se calculent. On ne tape jamais dans une case verte.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SAISIE ============ -->
+<section class="block" id="saisie">
+  <div class="wrap">
+    <p class="sec-kicker">Saisie</p>
+    <h2 class="sec-title">La feuille de la semaine.</h2>
+    <p class="sec-intro">Écrivez dans les cases blanches. Les vertes se calculent seules. Essayez : changez un chiffre.</p>
+    <span class="tag">Données d'exemple</span>
+    <div class="legend" aria-label="Légende du tableau">
+      <span><span class="sw" aria-hidden="true"></span>J'écris</span>
+      <span><span class="sw calc" aria-hidden="true"></span>Calculé seul</span>
+    </div>
+    <div class="table-scroll">
+      <table class="saisie" aria-describedby="note-formule">
+        <thead>
+          <tr><th scope="col">Semaine</th><th scope="col">Nés vivants</th><th scope="col">Mort-nés</th><th scope="col">Total</th></tr>
+        </thead>
+        <tbody id="saisieBody">
+          <tr>
+            <td class="week">S1</td>
+            <td class="cell-input"><input class="in-nv num" type="number" inputmode="numeric" min="0" value="4" aria-label="Nés vivants, semaine 1"></td>
+            <td class="cell-input"><input class="in-mn num" type="number" inputmode="numeric" min="0" value="0" aria-label="Mort-nés, semaine 1"></td>
+            <td class="calc num cell-total">4</td>
+          </tr>
+          <tr>
+            <td class="week">S2</td>
+            <td class="cell-input"><input class="in-nv num" type="number" inputmode="numeric" min="0" value="5" aria-label="Nés vivants, semaine 2"></td>
+            <td class="cell-input"><input class="in-mn num" type="number" inputmode="numeric" min="0" value="1" aria-label="Mort-nés, semaine 2"></td>
+            <td class="calc num cell-total">6</td>
+          </tr>
+          <tr>
+            <td class="week">S3</td>
+            <td class="cell-input"><input class="in-nv num" type="number" inputmode="numeric" min="0" value="7" aria-label="Nés vivants, semaine 3"></td>
+            <td class="cell-input"><input class="in-mn num" type="number" inputmode="numeric" min="0" value="0" aria-label="Mort-nés, semaine 3"></td>
+            <td class="calc num cell-total">7</td>
+          </tr>
+          <tr class="total">
+            <td class="week">Σ TOTAL</td>
+            <td class="num" id="sumNv">16</td>
+            <td class="num" id="sumMn">1</td>
+            <td class="num" id="sumT">17</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="formule" id="note-formule"><span class="sq" aria-hidden="true"></span><span>Total = nés vivants + mort-nés. Les cases vertes se calculent seules.</span></p>
+    <div class="saisie-actions">
+      <button class="btn btn-outline" id="addRow" type="button">+ Ligne</button>
+      <button class="btn btn-primary" data-print type="button">Imprimer cette feuille</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RAPPORT ============ -->
+<section class="block rapport" id="rapport">
+  <div class="wrap">
+    <p class="sec-kicker">Rapport</p>
+    <h2 class="sec-title">Le mois, en une page.</h2>
+    <p class="sec-intro">Le rapport reprend vos chiffres. Il ne vous demande rien de plus.</p>
+    <p class="rapport-lede">Ce mois, <span class="num">328</span> consultations, surtout pour le paludisme. <span class="num">17</span> accouchements, <span class="num">16</span> nés vivants, <span class="num">6</span> décès. Vaccination à <span class="num">83&nbsp;%</span>.</p>
+    <table class="maladies">
+      <thead><tr><th scope="col">Consultations par maladie</th><th scope="col" class="num">N</th></tr></thead>
+      <tbody>
+        <tr><td>Paludisme</td><td class="num">131</td></tr>
+        <tr><td>Infections respiratoires</td><td class="num">74</td></tr>
+        <tr><td>Diarrhées</td><td class="num">39</td></tr>
+        <tr><td>Plaies et autres</td><td class="num">84</td></tr>
+        <tr class="total"><td>Σ Total</td><td class="num">328</td></tr>
+      </tbody>
+    </table>
+    <div class="obs"><strong>⚠ Observations.</strong>Rupture proche en amoxicilline et ACT. Commander cette semaine.</div>
+    <button class="btn btn-light" data-print type="button">Imprimer le rapport</button>
+  </div>
+</section>
+
+<!-- ============ ÉTATS ============ -->
+<section class="block" id="etats">
+  <div class="wrap">
+    <p class="sec-kicker">États</p>
+    <h2 class="sec-title">Un mot, un signe. Jamais la couleur seule.</h2>
+    <p class="sec-intro">Chaque état se lit en mots, même sans voir les couleurs. Même sur une impression noir et blanc.</p>
+    <div class="etats-grid">
+      <article class="etat ok">
+        <span class="signe" aria-hidden="true">OK</span>
+        <span class="mot">Stock suffisant.</span>
+        <p>Amoxicilline : 42 boîtes. Rien à signaler.</p>
+      </article>
+      <article class="etat warn">
+        <span class="signe" aria-hidden="true">⚠</span>
+        <span class="mot">Stock bas.</span>
+        <p>ACT : 6 boîtes. Commander cette semaine.</p>
+      </article>
+      <article class="etat rupt">
+        <span class="signe" aria-hidden="true">✕</span>
+        <span class="mot">Rupture.</span>
+        <p>Penta 3 : 0 dose. À rattraper en priorité.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPRESSION ============ -->
+<section class="block" id="impression" style="padding-top:0">
+  <div class="wrap">
+    <p class="sec-kicker">Impression</p>
+    <h2 class="sec-title">Sobre, même sans couleur.</h2>
+    <div class="print-demo">
+      <div>
+        <p class="sec-intro" style="margin-bottom:0">La feuille imprimée reprend vos chiffres. Fond blanc, traits noirs, en-tête complet.</p>
+        <p class="bw-note">Sur une impression noir et blanc, rien ne se perd : chaque état porte un mot ou un signe.</p>
+        <div class="print-actions">
+          <button class="btn btn-primary" data-print type="button">Imprimer</button>
+        </div>
+      </div>
+      <div class="paper-sheet" aria-label="Aperçu noir et blanc de la feuille">
+        <div class="ps-head"><strong>Registre Santé — feuille mensuelle</strong><span>Site 1 · Octobre 2026 · Infirmier : ______</span></div>
+        <table class="ps-table">
+          <thead><tr><th>Semaine</th><th class="num">Nés vivants</th><th class="num">Mort-nés</th><th class="num">Total</th></tr></thead>
+          <tbody>
+            <tr><td>S1</td><td class="num">4</td><td class="num">0</td><td class="num">4</td></tr>
+            <tr><td>S2</td><td class="num">5</td><td class="num">1</td><td class="num">6</td></tr>
+            <tr><td>S3</td><td class="num">7</td><td class="num">0</td><td class="num">7</td></tr>
+            <tr class="total"><td>Σ Total</td><td class="num">16</td><td class="num">1</td><td class="num">17</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DÉMO ============ -->
+<section class="block demo" id="demo">
+  <div class="wrap">
+    <p class="sec-kicker">Démonstration</p>
+    <h2 class="sec-title">Voir le registre en vrai.</h2>
+    <p class="sec-intro">Laissez un contact. On vous montre le registre sur votre propre téléphone.</p>
+    <div class="demo-card">
+      <h3>Demander une démo</h3>
+      <span class="tag">Maquette — sans envoi réel</span>
+      <form id="demoForm" novalidate>
+        <div class="field">
+          <label for="f-nom">Votre nom</label>
+          <input id="f-nom" name="nom" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-tel">Téléphone</label>
+          <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required>
+        </div>
+        <div class="field">
+          <label for="f-msg">Votre structure <span style="font-weight:400;color:var(--attenue)">(facultatif)</span></label>
+          <textarea id="f-msg" name="message" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Envoyer la demande</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#haut" aria-label="Registre Santé — haut de page">
+      <svg width="36" height="36" viewBox="0 0 48 48" role="img" aria-label="Logo Registre Santé"><rect width="48" height="48" rx="12" fill="#0E6B4A"/><g fill="#FFFFFF" fill-opacity="0.35"><rect x="6" y="6" width="10" height="10" rx="2"/><rect x="32" y="6" width="10" height="10" rx="2"/><rect x="6" y="32" width="10" height="10" rx="2"/><rect x="32" y="32" width="10" height="10" rx="2"/></g><g fill="#FFFFFF"><rect x="19" y="6" width="10" height="10" rx="2"/><rect x="6" y="19" width="10" height="10" rx="2"/><rect x="32" y="19" width="10" height="10" rx="2"/><rect x="19" y="32" width="10" height="10" rx="2"/></g><rect x="19" y="19" width="10" height="10" rx="2" fill="#E8830C"/></svg>
+      <span class="brand-name">Registre Santé</span>
+    </a>
+    <p>Le registre du dispensaire et de la maternité, sur téléphone et sur papier. Les chiffres de cette page sont des données d'exemple.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var tbody = document.getElementById('saisieBody');
+  var weekCount = 3;
+
+  function toInt(v){ var n = parseInt(v, 10); return isNaN(n) ? 0 : n; }
+
+  function recalc(){
+    var sNv = 0, sMn = 0;
+    var rows = tbody.querySelectorAll('tr');
+    for (var i = 0; i < rows.length; i++){
+      var tr = rows[i];
+      var nvInput = tr.querySelector('.in-nv');
+      if (!nvInput) continue;
+      var nv = toInt(nvInput.value);
+      var mn = toInt(tr.querySelector('.in-mn').value);
+      tr.querySelector('.cell-total').textContent = nv + mn;
+      sNv += nv; sMn += mn;
+    }
+    document.getElementById('sumNv').textContent = sNv;
+    document.getElementById('sumMn').textContent = sMn;
+    document.getElementById('sumT').textContent = sNv + sMn;
+  }
+
+  tbody.addEventListener('input', recalc);
+
+  document.getElementById('addRow').addEventListener('click', function(){
+    weekCount++;
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="week">S' + weekCount + '</td>' +
+      '<td class="cell-input"><input class="in-nv num" type="number" inputmode="numeric" min="0" value="0" aria-label="Nés vivants, semaine ' + weekCount + '"></td>' +
+      '<td class="cell-input"><input class="in-mn num" type="number" inputmode="numeric" min="0" value="0" aria-label="Mort-nés, semaine ' + weekCount + '"></td>' +
+      '<td class="calc num cell-total">0</td>';
+    var totalRow = tbody.querySelector('tr.total');
+    if (totalRow) tbody.insertBefore(tr, totalRow); else tbody.appendChild(tr);
+    recalc();
+    var first = tr.querySelector('input');
+    if (first) first.focus();
+  });
+
+  var printers = document.querySelectorAll('[data-print]');
+  for (var p = 0; p < printers.length; p++){
+    printers[p].addEventListener('click', function(){ window.print(); });
+  }
+
+  var form = document.getElementById('demoForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.innerHTML = '<p class="form-ok"><strong>Enregistré.</strong></p>' +
+      '<p class="form-note"><span class="tag" style="margin:0">Maquette — sans envoi réel</span></p>';
+  });
+
+  recalc();
+})();
+</script>
+</body>
+</html>
