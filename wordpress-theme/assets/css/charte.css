@@ -3,23 +3,23 @@
    AELYRA × OXYNE Z — VERSION PUBLIQUE
    Tout le CSS est encapsulé sous la classe racine .axz :
    aucun sélecteur global nu, prêt à vivre dans un thème WordPress.
-   Charte « D'ici » : terracotta / crème / encre, Fraunces + Archivo.
-   Oxyne Z : fond nuit chaud, accent cyan #3FC1C9, rouge = alertes.
+   Charte « D'ici » — variante or : or / crème / encre, Fraunces + Archivo.
+   Oxyne Z : fond nuit chaud, accent or #C9A227, rouge = alertes.
    ================================================================== */
 .axz{
   --cream:#F5EFE6;
   --paper:#FBF8F1;
   --ink:#1C1A17;
   --ink-soft:#4A443C;
-  --terra:#C96F3F;
-  --terra-deep:#A45327;
+  --terra:#C9A227;
+  --terra-deep:#8A6A1F;
   --line:rgba(28,26,23,.14);
   --line-soft:rgba(28,26,23,.08);
   --night:#16120E;
   --night-2:#201913;
   --night-line:rgba(245,239,230,.16);
   --night-txt:rgba(245,239,230,.82);
-  --cyan:#3FC1C9;
+  --cyan:#C9A227;
   --alert:#D05545;
   --ok:#7BA05B;
   --serif:"Fraunces",Georgia,serif;
@@ -302,7 +302,7 @@
 }
 .axz .btn-mini:active{transform:scale(.96)}
 .axz .btn-mini.go{background:var(--cyan);color:var(--night)}
-.axz .btn-mini.go:hover{background:#5BD0D8}
+.axz .btn-mini.go:hover{background:#E3C878}
 .axz .btn-mini.no{background:transparent;color:var(--night-txt)}
 .axz .btn-mini.no:hover{border-color:var(--night-txt);color:var(--cream)}
 .axz .soc-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:var(--gap)}
