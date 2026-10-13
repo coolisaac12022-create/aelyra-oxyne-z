@@ -36,3 +36,12 @@
 }
 .axz-rowform{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .axz-rowform select{max-width:150px}
+
+/* Journal de sécurité : badges par type d'événement. */
+.axz-badge.sec-connexion_echouee{background:#F6E7D7;color:#A45327}
+.axz-badge.sec-acces_interdit{background:#F7DDD6;color:#8F2F24}
+.axz-badge.sec-nonce_invalide{background:#F6E7D7;color:#A45327}
+.axz-badge.sec-bot_honeypot{background:#E9E2F5;color:#5B4A8A}
+.axz-badge.sec-requete_suspecte{background:#F7DDD6;color:#8F2F24}
+.axz-badge.sec-ip_bloquee{background:#2B2620;color:#F5EFE6}
+.axz-badge.sec-xmlrpc_bloque{background:#E4EEDB;color:#3E5C2E}

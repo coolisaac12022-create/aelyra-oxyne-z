@@ -112,3 +112,7 @@ body.admin-bar .axz .progress{top:32px}
   color:rgba(245,239,230,.7);font-size:13.5px;text-decoration:none;font-weight:600;
 }
 .axz footer .f-menu a:hover{color:var(--terra)}
+
+/* Honeypot anti-bot : champ invisible pour les humains (connexion,
+   inscription). Les bots le remplissent et se font journaliser. */
+.axz-hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
