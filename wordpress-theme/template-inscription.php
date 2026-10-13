@@ -87,7 +87,11 @@ if ( isset( $_POST['axz_inscription_submit'] ) ) {
 		} else {
 			update_user_meta( $user_id, 'axz_offre', $axz_values['offre'] );
 			update_user_meta( $user_id, 'axz_statut', 'essai' );
-			update_user_meta( $user_id, 'axz_fin_essai', gmdate( 'Y-m-d', strtotime( '+7 days' ) ) );
+			$duree_essai = function_exists( 'axz_get_option' ) ? absint( axz_get_option( 'duree_essai', 7 ) ) : 7;
+			if ( $duree_essai < 1 ) {
+				$duree_essai = 7;
+			}
+			update_user_meta( $user_id, 'axz_fin_essai', gmdate( 'Y-m-d', strtotime( '+' . $duree_essai . ' days' ) ) );
 			update_user_meta( $user_id, 'axz_telephone', $tel );
 
 			wp_set_current_user( $user_id );

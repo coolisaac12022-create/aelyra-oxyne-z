@@ -16,14 +16,25 @@ tableau de bord administrateur.
   d'essai = +7 jours), **Espace client** (`template-espace-client.php` +
   shortcode `[axz_espace_client]`).
 - **Admin « Aelyra »** : Vue d'ensemble (clients, essais en cours, répartition
-  par offre, MRR estimé), Clients (liste avec recherche, pagination, actions
-  Valider / Suspendre / Réactiver), Abonnements (changement d'offre et de statut).
+  par offre, MRR estimé, **alertes de dépassement des plafonds de coût**),
+  Clients (liste avec recherche, pagination, actions Valider / Suspendre /
+  Réactiver), Abonnements (changement d'offre et de statut), **Essais**
+  (essais finissant dans ≤ 3 jours + bouton « Marquer relancé »),
+  **Paiements** (statut manuel par client : payé / en attente), **Alertes
+  Oxyne Z** (structure prête : validation/rejet des signalements),
+  **Journal** (journal d'activité paginé, filtre par client),
+  **Réglages** (clés API, plafonds de coût, durée d'essai, devise).
 - **Sécurité** : garde `ABSPATH` sur chaque fichier, `current_user_can()` sur
   chaque page d'admin et chaque action, nonces sur tous les formulaires,
   entrées assainies, sorties échappées, anti-référence directe d'objet (un
   client ne voit que ses propres données), limitation des connexions
   (5 essais / 15 min par IP), clients redirigés hors de wp-admin, barre
   d'admin masquée pour les clients.
+- **Extensions admin** : journal d'activité en table dédiée (qui a fait quoi,
+  quand), statuts de paiement validés manuellement (pas de prélèvement auto),
+  alertes Oxyne Z avec validation obligatoire avant tout signalement,
+  plafonds de coût par client avec alerte de dépassement, clés API stockées
+  en options et masquées à l'affichage.
 
 ## Installation
 
@@ -49,6 +60,17 @@ tableau de bord administrateur.
    vide « Accueil » si besoin) — la vitrine s'affiche automatiquement.
 4. **Menus** : Apparence > Menus — le thème déclare « Menu principal » et
    « Menu pied de page » (le pied de page du site affiche ce dernier).
+5. **Aelyra > Réglages** (administrateur uniquement) : à remplir **quand le
+   financement arrive** — le site fonctionne sans, en mode vitrine +
+   gestion manuelle :
+   - **Clés API** : jeton WhatsApp Business, identifiant du numéro WhatsApp,
+     clé API du modèle d'IA, clé client TikTok (stockées masquées, jamais
+     affichées en clair).
+   - **Plafonds de coût** : plafond WhatsApp et plafond IA ($/mois/client,
+     défauts 10 et 5) — la vue d'ensemble alerte en cas de dépassement dès
+     que le connecteur agent remonte la consommation.
+   - **Général** : durée d'essai en jours (défaut 7, appliquée aux nouvelles
+     inscriptions), devise (défaut « F CFA »).
 
 ## wp-config.php recommandé
 

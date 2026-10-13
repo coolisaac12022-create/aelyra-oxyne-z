@@ -10,6 +10,7 @@ define( 'AXZ_VERSION', '1.0.0' );
 require_once get_template_directory() . '/inc/roles.php';
 require_once get_template_directory() . '/inc/security.php';
 require_once get_template_directory() . '/inc/admin.php';
+require_once get_template_directory() . '/inc/admin-extensions.php';
 
 /* ------------------------------------------------------------------
    Réglages du thème
