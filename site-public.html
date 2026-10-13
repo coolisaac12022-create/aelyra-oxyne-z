@@ -16,6 +16,7 @@
   --nuit:#16120E; --nuit2:#201913;
   --cyan:#3FC1C9; --cyan-clair:#5BD0D8; --alerte:#D05545;
   --r:18px;
+  --spring:cubic-bezier(0.22,1,0.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -43,8 +44,8 @@ section{padding:88px 0}
 .btn{
   display:inline-flex; align-items:center; gap:10px; border-radius:99px;
   padding:15px 32px; font-weight:700; font-size:15px; text-decoration:none;
-  transition:transform .18s ease, box-shadow .18s ease, background .18s ease; border:none; cursor:pointer;
-  position:relative; will-change:transform;
+  transition:transform .25s var(--spring), box-shadow .25s ease, background .25s ease, border-color .25s ease;
+  border:none; cursor:pointer; position:relative; will-change:transform;
 }
 .btn:hover{transform:translateY(-2px)}
 .btn-primary{background:var(--terracotta); color:#fff; box-shadow:0 10px 26px rgba(201,111,63,.32)}
@@ -68,14 +69,14 @@ header.site{
 .logo{font-family:'Fraunces',serif; font-weight:700; font-size:21px; color:var(--encre); text-decoration:none}
 .logo .x{color:var(--terracotta); font-style:italic; margin:0 4px}
 .logo .z{color:var(--terracotta-deep)}
-nav.links{display:flex; gap:34px}
+nav.links{display:flex; gap:30px}
 nav.links a{
   text-decoration:none; color:var(--encre-douce); font-weight:600; font-size:14.5px;
   letter-spacing:.04em; position:relative;
 }
 nav.links a::after{
   content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
-  background:var(--terracotta); transition:width .2s ease;
+  background:var(--terracotta); transition:width .25s var(--spring);
 }
 nav.links a:hover::after{width:100%}
 .nav-cta{padding:12px 26px; font-size:14px}
@@ -83,24 +84,32 @@ nav.links a:hover::after{width:100%}
 .hero{
   padding:158px 0 96px; position:relative; overflow:hidden; background:var(--papier);
 }
-.orb{position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; z-index:0}
-.orb-a{width:520px; height:520px; left:-140px; top:-120px;
-  background:radial-gradient(circle, rgba(201,111,63,.32), transparent 65%);
-  animation:drift1 24s ease-in-out infinite alternate}
-.orb-b{width:620px; height:620px; right:-180px; top:6%;
-  background:radial-gradient(circle, rgba(201,111,63,.22), transparent 65%);
-  animation:drift2 30s ease-in-out infinite alternate}
-.orb-c{width:420px; height:420px; left:38%; bottom:-180px;
-  background:radial-gradient(circle, rgba(63,193,201,.14), transparent 65%);
-  animation:drift1 26s ease-in-out infinite alternate-reverse}
-@keyframes drift1{from{transform:translate(0,0) scale(1)} to{transform:translate(90px,60px) scale(1.15)}}
-@keyframes drift2{from{transform:translate(0,0) scale(1.1)} to{transform:translate(-80px,70px) scale(.95)}}
+/* mesh aurore — tons chauds uniquement */
+.aurora{position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+.aurora i{
+  position:absolute; border-radius:50%; filter:blur(90px); will-change:transform;
+  animation:aur 34s ease-in-out infinite alternate;
+}
+.aurora i:nth-child(1){width:640px; height:640px; left:-160px; top:-140px;
+  background:radial-gradient(circle, rgba(201,111,63,.30), transparent 65%)}
+.aurora i:nth-child(2){width:720px; height:720px; right:-200px; top:4%;
+  background:radial-gradient(circle, rgba(201,111,63,.20), transparent 65%);
+  animation-duration:42s; animation-direction:alternate-reverse}
+.aurora i:nth-child(3){width:520px; height:520px; left:36%; bottom:-220px;
+  background:radial-gradient(circle, rgba(245,239,230,.55), transparent 60%);
+  animation-duration:30s}
+@keyframes aur{from{transform:translate(0,0) scale(1)} to{transform:translate(110px,70px) scale(1.18)}}
 .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; position:relative; z-index:1}
 .hero h1{font-size:clamp(38px,4.6vw,60px); margin:0 0 22px}
-.hero h1 em{font-style:italic; color:var(--terracotta-deep)}
+.hero h1 em{
+  font-style:italic; color:var(--terracotta-deep);
+  transition:color .4s var(--spring), text-shadow .4s var(--spring);
+  cursor:default;
+}
+.hero h1 em:hover{color:var(--terracotta); text-shadow:0 0 34px rgba(201,111,63,.45)}
 .hero h1 .w{display:inline-block; opacity:0; transform:translateY(26px) rotate(2deg); filter:blur(6px)}
-.hero h1 .w.in{opacity:1; transform:none; filter:blur(0); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1), filter .7s ease}
-.hero p.lead{font-size:18px; color:var(--encre-douce); max-width:46ch; margin-bottom:34px}
+.hero h1 .w.in{opacity:1; transform:none; filter:blur(0); transition:opacity .7s ease, transform .7s var(--spring), filter .7s ease}
+.hero p.lead{font-size:18px; color:var(--encre-douce); max-width:44ch; margin-bottom:34px}
 .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:26px}
 .hero-note{font-size:13.5px; color:var(--encre-douce); display:flex; align-items:center; gap:8px}
 .dot{width:8px; height:8px; border-radius:50%; background:var(--succes); display:inline-block; animation:blink 2.4s infinite}
@@ -190,7 +199,7 @@ nav.links a:hover::after{width:100%}
   max-width:84%; padding:9px 13px; border-radius:14px; font-size:13.5px; line-height:1.45;
   box-shadow:0 1px 2px rgba(28,26,23,.14);
   opacity:0; transform:translateY(10px) scale(.97);
-  transition:opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1.2);
+  transition:opacity .35s ease, transform .35s var(--spring);
 }
 .msg.show{opacity:1; transform:none}
 .msg.client{background:#fff; align-self:flex-start; border-bottom-left-radius:4px}
@@ -204,7 +213,7 @@ nav.links a:hover::after{width:100%}
 .prio-note{
   align-self:center; font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
   color:var(--terracotta-deep); background:rgba(201,111,63,.16); padding:6px 14px; border-radius:99px;
-  opacity:0; transform:scale(.85); transition:opacity .4s ease, transform .4s cubic-bezier(.2,.7,.2,1.4);
+  opacity:0; transform:scale(.85); transition:opacity .4s ease, transform .4s var(--spring);
   box-shadow:0 0 18px rgba(201,111,63,.25);
 }
 .prio-note.show{opacity:1; transform:scale(1)}
@@ -244,25 +253,54 @@ nav.links a:hover::after{width:100%}
 .marquee-track span i{color:var(--terracotta); font-style:normal}
 .marquee-track span b{color:var(--cyan-clair); font-weight:700}
 @keyframes scrollX{to{transform:translateX(-50%)}}
-/* ---------- bandeau chiffres ---------- */
-.band{background:var(--encre); color:var(--creme); padding:60px 0; position:relative; overflow:hidden}
-.band::before{content:""; position:absolute; inset:0;
-  background:radial-gradient(700px 300px at 50% 120%, rgba(201,111,63,.16), transparent 60%)}
-.band-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; text-align:center; position:relative}
-.band .n{font-family:'Fraunces',serif; font-size:52px; font-weight:700; color:var(--terracotta); font-variant-numeric:tabular-nums}
-.band .l{font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.75; margin-top:6px}
+/* ---------- bandeau photo plein écran (parallaxe JS) ---------- */
+.photo-band{
+  position:relative; height:72vh; min-height:480px; overflow:hidden; padding:0;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+}
+.photo-band .pb-img{
+  position:absolute; top:-15%; left:0; width:100%; height:130%;
+  object-fit:cover; will-change:transform;
+}
+.photo-band .pb-veil{
+  position:absolute; inset:0; background:linear-gradient(180deg, rgba(22,18,14,.62), rgba(22,18,14,.34) 45%, rgba(22,18,14,.62));
+}
+.photo-band .pb-text{position:relative; z-index:2; max-width:900px; padding:0 28px}
+.photo-band .pb-text h2{
+  color:#fff; font-size:clamp(30px,4.4vw,58px); max-width:20ch; margin:0 auto;
+}
+.photo-band .pb-text h2 em{font-style:italic; color:#F0C9A8}
+.photo-band .pb-cap{
+  position:absolute; bottom:18px; right:24px; z-index:2;
+  font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,239,230,.75);
+}
+/* ---------- ligne cinétique contour ---------- */
+.kinetic{
+  overflow:hidden; padding:56px 0 8px; background:var(--papier);
+}
+.kinetic-track{
+  display:flex; width:max-content; white-space:nowrap;
+  animation:kinetic 70s linear infinite;
+}
+.kinetic-track span{
+  font-family:'Fraunces',serif; font-weight:600; font-size:clamp(64px,9vw,132px);
+  letter-spacing:.04em; color:transparent;
+  -webkit-text-stroke:1.5px rgba(164,83,39,.5);
+  padding-right:60px;
+}
+@keyframes kinetic{to{transform:translateX(-50%)}}
 /* ---------- révélations au scroll ---------- */
 .reveal{opacity:0; transform:translateY(34px); filter:blur(7px);
-  transition:opacity .9s ease, transform .9s cubic-bezier(.16,.7,.2,1), filter .9s ease}
+  transition:opacity .9s ease, transform .9s var(--spring), filter .9s ease}
 .reveal.in{opacity:1; transform:none; filter:blur(0)}
 .reveal[data-d="1"]{transition-delay:.12s}.reveal[data-d="2"]{transition-delay:.24s}.reveal[data-d="3"]{transition-delay:.36s}
 /* ---------- étapes ---------- */
 .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px}
 .step{
-  background:#fff; border-radius:var(--r); padding:34px 30px;
+  background:#fff; border-radius:var(--r); padding:32px 28px;
   border:1px solid rgba(28,26,23,.08); position:relative;
   box-shadow:0 6px 22px rgba(28,26,23,.05);
-  transition:transform .35s cubic-bezier(.2,.7,.2,1.2), box-shadow .35s ease;
+  transition:transform .35s var(--spring), box-shadow .35s ease;
   overflow:hidden;
 }
 .step::before{content:""; position:absolute; inset:0; opacity:0; transition:opacity .35s;
@@ -273,51 +311,62 @@ nav.links a:hover::after{width:100%}
   font-family:'Fraunces',serif; font-size:15px; font-weight:700; color:#fff;
   background:linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
   width:44px; height:44px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:18px;
   box-shadow:0 8px 18px rgba(201,111,63,.35);
 }
-.step h3{font-size:21px; margin-bottom:10px}
-.step p{color:var(--encre-douce); font-size:15px}
-.step .ico{color:#C96F3F; margin-bottom:14px; display:block}
-.step .ico svg{width:38px; height:38px; display:block; overflow:visible}
+.step h3{font-size:20px; margin-bottom:8px}
+.step p{color:var(--encre-douce); font-size:14.5px}
+.step .ico{color:#C96F3F; margin-bottom:12px; display:block}
+.step .ico svg{width:36px; height:36px; display:block; overflow:visible}
 .step .ico svg [stroke]{stroke-dasharray:1; stroke-dashoffset:1}
 .step .ico.drawn svg [stroke]{animation:draw 1.4s ease forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
-/* ---------- rapport du matin ---------- */
-.rapport{background:var(--creme); position:relative; overflow:hidden}
-.rapport-card{
-  background:#fff; border-radius:var(--r); max-width:640px; margin:44px auto 0;
-  border:1px solid rgba(28,26,23,.09); overflow:hidden;
-  box-shadow:0 24px 60px rgba(28,26,23,.1);
-  transition:transform .4s cubic-bezier(.2,.7,.2,1.15), box-shadow .4s ease;
+/* carte résumé compacte (rapport du matin, replié dans l'étape 3) */
+.mini-rapport{
+  margin-top:18px; background:var(--creme); border-radius:14px; padding:6px 16px;
+  border:1px solid rgba(28,26,23,.08);
 }
-.rapport-card:hover{transform:translateY(-6px) scale(1.01); box-shadow:0 34px 80px rgba(164,83,39,.18)}
-.rapport-head{
-  background:linear-gradient(135deg, var(--encre), #2c2620); color:var(--creme); padding:22px 30px;
-  display:flex; justify-content:space-between; align-items:center;
+.mini-rapport .mr-head{
+  font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--terracotta-deep); padding:10px 0 2px;
 }
-.rapport-head b{font-family:'Fraunces',serif; font-size:19px; display:flex; align-items:center}
-.rapport-head span{font-size:12px; letter-spacing:.16em; text-transform:uppercase; opacity:.7}
-.rapport-body{padding:10px 30px 28px}
-.rapport-row{
-  display:flex; align-items:center; gap:16px; padding:18px 0;
-  border-bottom:1px dashed rgba(28,26,23,.14); font-size:15px;
+.mini-rapport .mr-row{
+  display:flex; align-items:center; gap:12px; padding:10px 0;
+  border-top:1px dashed rgba(28,26,23,.14); font-size:13.5px;
 }
-.rapport-row:last-child{border:none}
-.rapport-ico{
-  width:44px; height:44px; border-radius:14px; flex-shrink:0;
+.mini-rapport .mr-ico{
+  width:32px; height:32px; border-radius:10px; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
 }
-.rapport-ico svg{width:22px; height:22px; display:block}
-.ri-1{background:rgba(123,160,91,.16); color:#7BA05B}
-.ri-2{background:rgba(201,111,63,.14); color:#A45327}
-.ri-3{background:rgba(63,193,201,.14); color:#3FC1C9}
-.rapport-row b{display:block; font-size:15px}
-.rapport-row small{color:var(--encre-douce)}
-.rapport-row .go{margin-left:auto; font-weight:700; color:var(--terracotta-deep); font-size:13px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap}
+.mini-rapport .mr-ico svg{width:17px; height:17px; display:block}
+.mr-1{background:rgba(123,160,91,.18); color:#7BA05B}
+.mr-2{background:rgba(201,111,63,.16); color:#A45327}
+.mr-3{background:rgba(63,193,201,.16); color:#3FC1C9}
+.mini-rapport .mr-row b{display:block; font-size:13.5px; font-weight:700}
+.mini-rapport .mr-row small{color:var(--encre-douce); font-size:12px}
+/* ---------- Pour qui : trio photos ---------- */
+.pourqui-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px}
+.pq-card{background:#fff; border-radius:var(--r); overflow:hidden;
+  border:1px solid rgba(28,26,23,.08); box-shadow:0 6px 22px rgba(28,26,23,.05);
+  transition:transform .35s var(--spring), box-shadow .35s ease}
+.pq-card:hover{transform:translateY(-8px); box-shadow:0 22px 48px rgba(164,83,39,.16)}
+.pq-card figure{margin:0}
+.pq-card img{width:100%; height:250px; object-fit:cover; display:block;
+  transition:transform .6s var(--spring)}
+.pq-card:hover img{transform:scale(1.045)}
+.pq-card .pq-body{padding:24px 26px 20px}
+.pq-card h3{font-size:20px; margin-bottom:6px}
+.pq-card p{color:var(--encre-douce); font-size:14.5px}
+.pq-cap{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#a09a8d; padding:0 26px 22px}
 /* ---------- Oxyne Z ---------- */
 .oxyne{background:var(--nuit); color:#EDE6D8; position:relative; overflow:hidden}
 #oxynet{position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none}
+.ox-glow{
+  position:absolute; inset:0; pointer-events:none; z-index:1; opacity:0;
+  transition:opacity .6s ease;
+  background:radial-gradient(420px 420px at var(--gx,50%) var(--gy,50%), rgba(63,193,201,.13), transparent 65%);
+}
+.oxyne:hover .ox-glow{opacity:1}
 .radar{
   position:absolute; width:900px; height:900px; left:50%; top:-320px; transform:translateX(-50%);
   border-radius:50%; pointer-events:none; opacity:.5;
@@ -330,7 +379,15 @@ nav.links a:hover::after{width:100%}
 .oxyne .wrap{position:relative; z-index:2}
 .oxyne .kicker{color:var(--cyan-clair)}
 .oxyne h2{color:#fff}
-.oxyne .sub{color:#B9AE97; max-width:60ch; margin-top:14px; font-size:17px}
+.oxyne .sub{color:#B9AE97; max-width:58ch; margin-top:14px; font-size:16.5px}
+.live-pill{
+  display:inline-flex; align-items:center; gap:8px; margin-left:14px; vertical-align:middle;
+  font-family:'Archivo',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--cyan-clair); border:1px solid rgba(63,193,201,.5); border-radius:99px; padding:6px 14px;
+}
+.live-pill .ld{width:8px; height:8px; border-radius:50%; background:var(--cyan); position:relative}
+.live-pill .ld::after{content:""; position:absolute; inset:0; border-radius:50%; background:var(--cyan); animation:livep 1.8s ease-out infinite}
+@keyframes livep{from{transform:scale(1); opacity:.9} to{transform:scale(3); opacity:0}}
 .alert-card{
   background:rgba(32,25,19,.92); border:1px solid rgba(63,193,201,.28); border-radius:var(--r);
   padding:30px; margin-top:44px; max-width:720px; position:relative; overflow:hidden;
@@ -344,7 +401,7 @@ nav.links a:hover::after{width:100%}
   animation:scan 4.5s ease-in-out infinite;
 }
 @keyframes scan{0%{left:-90px} 60%,100%{left:calc(100% + 10px)}}
-.alert-top{display:flex; align-items:center; gap:14px; margin-bottom:16px; position:relative; z-index:2}
+.alert-top{display:flex; align-items:center; gap:14px; margin-bottom:16px; position:relative; z-index:2; flex-wrap:wrap}
 .alert-dot{width:12px; height:12px; border-radius:50%; background:var(--alerte); position:relative}
 .alert-dot::before,.alert-dot::after{
   content:""; position:absolute; inset:0; border-radius:50%; border:2px solid var(--alerte);
@@ -353,7 +410,7 @@ nav.links a:hover::after{width:100%}
 .alert-dot::after{animation-delay:1.1s}
 @keyframes rings{from{transform:scale(1); opacity:.9} to{transform:scale(3.4); opacity:0}}
 .alert-top .t{font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--alerte)}
-.alert-card h3{color:#fff; font-size:23px; margin-bottom:10px; position:relative; z-index:2}
+.alert-card h3{color:#fff; font-size:22px; margin-bottom:10px; position:relative; z-index:2}
 .alert-card p{color:#B9AE97; font-size:15px; margin-bottom:8px; position:relative; z-index:2}
 .alert-meta{display:flex; gap:22px; margin:18px 0 24px; flex-wrap:wrap; position:relative; z-index:2}
 .alert-meta div{font-size:13px; color:#8E8271}
@@ -365,7 +422,7 @@ nav.links a:hover::after{width:100%}
 .btn-outline-w:hover{border-color:var(--alerte); color:#fff}
 .oxyne-note{margin-top:22px; font-size:13.5px; color:#8E8271; display:flex; gap:10px; align-items:flex-start}
 .oxyne-note .lock{color:var(--cyan); flex-shrink:0; margin-top:2px}
-/* ---------- tarifs : tilt 3D ---------- */
+/* ---------- tarifs : tilt 3D + reflet holographique Premium ---------- */
 .tarifs-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:52px; align-items:stretch; perspective:1400px}
 .tarif{
   background:#fff; border-radius:var(--r); padding:38px 34px;
@@ -378,7 +435,16 @@ nav.links a:hover::after{width:100%}
 .tarif.hl{
   background:linear-gradient(160deg, #241d16, var(--encre) 60%); color:var(--creme); border:none;
   box-shadow:0 26px 60px rgba(28,26,23,.25), 0 0 70px rgba(201,111,63,.22);
+  overflow:hidden;
 }
+/* reflet holographique subtil qui suit la souris (Premium) */
+.tarif.hl::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:radial-gradient(340px 340px at var(--hx,50%) var(--hy,30%),
+    rgba(255,255,255,.10), rgba(91,208,216,.07) 42%, transparent 70%);
+  opacity:0; transition:opacity .5s ease;
+}
+.tarif.hl:hover::before{opacity:1}
 .tarif .plan{font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--terracotta-deep)}
 .tarif.hl .plan{color:var(--terracotta)}
 .tarif h3{font-size:30px; margin:10px 0 4px}
@@ -413,9 +479,9 @@ summary{
   display:flex; justify-content:space-between; align-items:center; gap:16px;
 }
 summary::-webkit-details-marker{display:none}
-summary .plus{color:var(--terracotta); font-size:22px; font-weight:400; flex-shrink:0; transition:transform .3s cubic-bezier(.2,.7,.2,1.4)}
+summary .plus{color:var(--terracotta); font-size:22px; font-weight:400; flex-shrink:0; transition:transform .3s var(--spring)}
 details[open] summary .plus{transform:rotate(135deg)}
-.faq-a{display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+.faq-a{display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s var(--spring)}
 details[open] .faq-a{grid-template-rows:1fr}
 .faq-a > div{overflow:hidden}
 .faq-a p{padding:0 26px 22px; color:var(--encre-douce); font-size:15px}
@@ -427,7 +493,7 @@ footer::before{content:""; position:absolute; inset:0;
 .foot-grid .logo{color:var(--creme)}
 .foot-grid p{font-size:14px; margin-top:12px; max-width:34ch}
 .foot-grid h4{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--creme); margin-bottom:16px}
-.foot-grid a{color:#B9AE97; text-decoration:none; font-size:14.5px; display:block; padding:5px 0; transition:color .2s, transform .2s}
+.foot-grid a{color:#B9AE97; text-decoration:none; font-size:14.5px; display:block; padding:5px 0; transition:color .2s, transform .25s var(--spring)}
 .foot-grid a:hover{color:var(--terracotta); transform:translateX(4px)}
 .foot-num{font-family:'Fraunces',serif; font-size:22px; color:var(--creme); margin-top:6px}
 .foot-bottom{
@@ -443,12 +509,12 @@ footer::before{content:""; position:absolute; inset:0;
   .hero-grid{grid-template-columns:1fr}
   .phone-stage{margin-top:10px}
   .phone{width:284px}
-  .steps,.tarifs-grid{grid-template-columns:1fr; max-width:520px; margin-left:auto; margin-right:auto}
-  .band-grid{grid-template-columns:1fr; gap:34px}
+  .steps,.tarifs-grid,.pourqui-grid{grid-template-columns:1fr; max-width:520px; margin-left:auto; margin-right:auto}
   nav.links{display:none}
   .foot-grid{grid-template-columns:1fr}
   section{padding:64px 0}
   .radar{width:600px; height:600px; top:-200px}
+  .photo-band{height:60vh; min-height:400px}
 }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
@@ -464,6 +530,7 @@ footer::before{content:""; position:absolute; inset:0;
     <a class="logo" href="#">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></a>
     <nav class="links">
       <a href="#service">Le service</a>
+      <a href="#pourqui">Pour qui</a>
       <a href="#oxyne">Oxyne Z</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#faq">FAQ</a>
@@ -473,12 +540,12 @@ footer::before{content:""; position:absolute; inset:0;
 </header>
 
 <section class="hero">
-  <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap hero-grid">
     <div>
       <span class="kicker">La réceptionniste des entreprises</span>
       <h1 id="heroTitle">Vos clients accueillis. <em>Votre nom protégé.</em></h1>
-      <p class="lead">Aelyra répond à vos clients sur WhatsApp, prend vos rendez-vous et présente vos produits — pendant qu'Oxyne&nbsp;Z veille sur votre réputation, jour et nuit.</p>
+      <p class="lead">Aelyra répond à vos clients sur WhatsApp — rendez-vous, catalogue, Mobile Money. Oxyne&nbsp;Z veille sur votre réputation, jour et nuit.</p>
       <div class="hero-ctas">
         <a href="#tarifs" class="btn btn-primary btn-halo" data-magnet>Essai gratuit 7 jours</a>
         <a href="#service" class="btn btn-ghost" data-magnet>Voir comment ça marche</a>
@@ -523,70 +590,106 @@ footer::before{content:""; position:absolute; inset:0;
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track" id="marqueeTrack">
-    <span>WhatsApp <i>✦</i></span><span>Rendez-vous <i>✦</i></span><span>Mobile Money <i>✦</i></span><span>Rapport du matin <i>✦</i></span><span><b>Oxyne Z</b> <i>✦</i></span><span>Essai 7 jours <i>✦</i></span>
+    <span>WhatsApp <i>✦</i></span><span>Rendez-vous <i>✦</i></span><span>Mobile Money <i>✦</i></span><span><b>Oxyne Z</b> <i>✦</i></span><span>Essai 7 jours <i>✦</i></span><span>Salons · Boutiques · Ateliers <i>✦</i></span>
   </div>
 </div>
 
-<div class="band">
-  <div class="wrap band-grid">
-    <div class="reveal"><div class="n"><span data-count="7">0</span></div><div class="l">jours d'essai gratuit</div></div>
-    <div class="reveal" data-d="1"><div class="n"><span data-count="3">0</span></div><div class="l">offres, de 6 000 F à 60 000 F</div></div>
-    <div class="reveal" data-d="2"><div class="n"><span data-count="0">0</span></div><div class="l">carte bancaire requise</div></div>
+<section class="photo-band" id="photoBand">
+  <img class="pb-img" id="pbImg"
+       src="https://images.pexels.com/photos/14881680/pexels-photo-14881680.jpeg?auto=compress&cs=tinysrgb&w=1920"
+       alt="Marché de rue animé, étals et passants">
+  <div class="pb-veil"></div>
+  <div class="pb-text reveal">
+    <h2>Conçu pour celles et ceux qui <em>font tourner</em> l'économie</h2>
+  </div>
+  <span class="pb-cap">Photo d'illustration</span>
+</section>
+
+<div class="kinetic" aria-hidden="true">
+  <div class="kinetic-track">
+    <span>2050 · L'ACCUEIL INTELLIGENT · 2050 · L'ACCUEIL INTELLIGENT · </span><span>2050 · L'ACCUEIL INTELLIGENT · 2050 · L'ACCUEIL INTELLIGENT · </span>
   </div>
 </div>
 
 <section id="service">
   <div class="wrap">
     <span class="kicker reveal">Le service</span>
-    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); max-width:22ch">Elle répond d'abord à l'urgent.<br>Elle n'oublie jamais personne.</h2>
+    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); max-width:22ch">L'urgent d'abord.<br>Personne d'oublié.</h2>
     <div class="steps">
       <div class="step reveal">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5" pathLength="1"/><path d="M11 18.5h2" pathLength="1"/></svg></span>
         <div class="num">1</div>
         <h3>Connectez votre WhatsApp</h3>
-        <p>On relie le numéro professionnel de votre entreprise en quelques minutes. Vous ne changez rien à vos habitudes.</p>
+        <p>Votre numéro pro, relié en quelques minutes. Rien ne change dans vos habitudes.</p>
       </div>
       <div class="step reveal" data-d="1">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1.1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z" pathLength="1"/></svg></span>
         <div class="num">2</div>
         <h3>Aelyra accueille vos clients</h3>
-        <p>Elle trie les messages par priorité, prend les rendez-vous, présente vos produits et envoie les liens de paiement Mobile Money. Elle dit toujours qu'elle est une IA.</p>
+        <p>Elle trie les messages par priorité, prend les rendez-vous, envoie les liens Mobile Money. Et elle dit toujours qu'elle est une IA.</p>
       </div>
       <div class="step reveal" data-d="2">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4V2" pathLength="1"/><path d="M5.6 6.6L4.2 5.2" pathLength="1"/><path d="M18.4 6.6l1.4-1.4" pathLength="1"/><path d="M3 18h18" pathLength="1"/><path d="M7 18a5 5 0 0 1 10 0" pathLength="1"/><path d="M12 9a3 3 0 0 0-3 3h6a3 3 0 0 0-3-3z" pathLength="1"/></svg></span>
         <div class="num">3</div>
-        <h3>Recevez le rapport du matin</h3>
-        <p>Chaque matin, un résumé clair : qui a écrit, quels rendez-vous pris, qui relancer. Vous gardez la main, sans passer vos journées sur le téléphone.</p>
+        <h3>Vous recevez le résumé</h3>
+        <p>Chaque matin, l'essentiel en un coup d'œil. Vous gardez la main, sans rester collé au téléphone.</p>
+        <div class="mini-rapport">
+          <div class="mr-head">Exemple de rapport</div>
+          <div class="mr-row">
+            <div class="mr-ico mr-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5.5"/></svg></div>
+            <div><b>3 rendez-vous pris</b><small>sam. 10h · sam. 14h · lun. 9h</small></div>
+          </div>
+          <div class="mr-row">
+            <div class="mr-ico mr-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1.1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z" pathLength="1"/></svg></div>
+            <div><b>14 messages traités</b><small>dont 3 demandes de rendez-vous</small></div>
+          </div>
+          <div class="mr-row">
+            <div class="mr-ico mr-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></svg></div>
+            <div><b>2 clients à relancer</b><small>devis sans réponse depuis 2 jours</small></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="rapport">
+<section id="pourqui" style="background:var(--creme)">
   <div class="wrap">
-    <span class="kicker reveal" style="text-align:center; display:block">Exemple de rapport</span>
-    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); text-align:center">Le rapport du matin</h2>
-    <div class="rapport-card reveal">
-      <div class="rapport-head">
-        <b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#E09A5F" stroke-width="1.8" stroke-linecap="round" style="margin-right:8px"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>Rapport — Salon Kadi Coiffure</b>
-        <span>mardi 13 oct.</span>
+    <span class="kicker reveal">Pour qui</span>
+    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); max-width:22ch">Pensez métier.<br>Elle fait le reste.</h2>
+    <div class="pourqui-grid">
+      <div class="pq-card reveal">
+        <figure>
+          <img src="https://thumbs.wbm.im/pw/medium/7c8c89c8ad5157baa8e3accd20ba8f30.jpg"
+               alt="Coiffeuse africaine qui tresse une cliente dans un salon de coiffure" loading="lazy">
+        </figure>
+        <div class="pq-body">
+          <h3>Salons de coiffure</h3>
+          <p>Rendez-vous pris pendant que vous coiffez. Zéro appel manqué.</p>
+        </div>
+        <div class="pq-cap">Photo d'illustration</div>
       </div>
-      <div class="rapport-body">
-        <div class="rapport-row">
-          <div class="rapport-ico ri-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5.5"/></svg></div>
-          <div><b>14 messages traités</b><small>dont 3 demandes de rendez-vous</small></div>
-          <span class="go">voir</span>
+      <div class="pq-card reveal" data-d="1">
+        <figure>
+          <img src="https://images.pexels.com/photos/12714976/pexels-photo-12714976.jpeg?auto=compress&cs=tinysrgb&w=1260"
+               alt="Vendeuse africaine au marché devant son étal d'ignames" loading="lazy">
+        </figure>
+        <div class="pq-body">
+          <h3>Boutiques &amp; marchés</h3>
+          <p>Catalogue, prix et liens Mobile Money envoyés en un message.</p>
         </div>
-        <div class="rapport-row">
-          <div class="rapport-ico ri-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
-          <div><b>3 rendez-vous pris</b><small>sam. 10h (Awa) · sam. 14h (Mariam) · lun. 9h (Ibrahim)</small></div>
-          <span class="go">voir</span>
+        <div class="pq-cap">Photo d'illustration</div>
+      </div>
+      <div class="pq-card reveal" data-d="2">
+        <figure>
+          <img src="https://images.pexels.com/photos/11645428/pexels-photo-11645428.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+               alt="Jeune tailleur africain travaillant à sa machine à coudre" loading="lazy">
+        </figure>
+        <div class="pq-body">
+          <h3>Ateliers &amp; services</h3>
+          <p>Devis, commandes et relances, même les mains occupées.</p>
         </div>
-        <div class="rapport-row">
-          <div class="rapport-ico ri-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9z"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></svg></div>
-          <div><b>2 clients à relancer</b><small>devis coiffure mariage sans réponse depuis 2 jours</small></div>
-          <span class="go">relancer</span>
-        </div>
+        <div class="pq-cap">Photo d'illustration</div>
       </div>
     </div>
   </div>
@@ -595,17 +698,19 @@ footer::before{content:""; position:absolute; inset:0;
 <section class="oxyne" id="oxyne">
   <canvas id="oxynet"></canvas>
   <div class="radar"></div>
+  <div class="ox-glow" id="oxGlow"></div>
   <div class="wrap">
-    <span class="kicker reveal">Oxyne Z · module premium</span>
-    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); max-width:24ch">Quelqu'un usurpe votre nom&nbsp;? Vous le saurez avant vos clients.</h2>
-    <p class="sub reveal">Oxyne&nbsp;Z surveille les fausses pages, les faux comptes et les usages frauduleux de votre numéro professionnel sur les réseaux. Quand il détecte quelque chose, il réunit les preuves et prépare le signalement — puis attend <b>votre accord</b> avant tout envoi.</p>
+    <span class="kicker reveal">Oxyne Z · module premium<span class="live-pill"><span class="ld"></span>En direct</span></span>
+    <h2 class="reveal" style="font-size:clamp(30px,3.4vw,44px); max-width:24ch">On usurpe votre nom&nbsp;? Vous le saurez en premier.</h2>
+    <p class="sub reveal">Oxyne&nbsp;Z surveille les fausses pages, les faux comptes et les usages frauduleux de votre numéro. S'il détecte quelque chose, il réunit les preuves, prépare le signalement — et attend <b>votre accord</b>.</p>
     <div class="alert-card reveal">
       <div class="alert-top">
         <span class="alert-dot"></span>
         <span class="t">Alerte Oxyne Z · exemple</span>
+        <span class="live-pill" style="margin-left:0"><span class="ld"></span>En direct</span>
       </div>
       <h3>Fausse page détectée</h3>
-      <p>Une page « Salon Kadi Coiffure Officiel » utilise vos photos et votre numéro pour arnaquer des clients. Le signalement est prêt — <b>en attente de votre accord</b>.</p>
+      <p>Une page « Salon Kadi Coiffure Officiel » utilise vos photos et votre numéro. Le signalement est prêt — <b>en attente de votre accord</b>.</p>
       <div class="alert-meta">
         <div>Plateforme<b>Facebook</b></div>
         <div>Preuves réunies<b>6 captures · 2 liens</b></div>
@@ -657,7 +762,7 @@ footer::before{content:""; position:absolute; inset:0;
         </ul>
         <a href="#" class="btn btn-ghost" data-magnet>Choisir Pro</a>
       </div>
-      <div class="tarif hl reveal" data-d="2" data-tilt>
+      <div class="tarif hl reveal" data-d="2" data-tilt data-holo>
         <span class="flag">Le plus complet</span>
         <span class="plan">Premium</span>
         <h3>Protégé à 360°</h3>
@@ -683,19 +788,19 @@ footer::before{content:""; position:absolute; inset:0;
     <div class="faq reveal">
       <details>
         <summary>Aelyra est-elle vraiment une intelligence artificielle ? <span class="plus">+</span></summary>
-        <div class="faq-a"><div><p>Oui — et elle le dit dès son premier message à vos clients, sans détour. Pas de faux humain : la confiance commence par l'honnêteté.</p></div></div>
+        <div class="faq-a"><div><p>Oui — et elle le dit dès son premier message, sans détour. La confiance commence par l'honnêteté.</p></div></div>
       </details>
       <details>
-        <summary>Faut-il une carte bancaire pour l'essai gratuit ? <span class="plus">+</span></summary>
-        <div class="faq-a"><div><p>Non. Les 7 jours d'essai sont gratuits et sans carte. À la fin, vous choisissez de continuer ou non — on ne vous prélève jamais par surprise.</p></div></div>
+        <summary>Faut-il une carte bancaire pour l'essai ? <span class="plus">+</span></summary>
+        <div class="faq-a"><div><p>Non. 7 jours gratuits, sans carte. À la fin, vous choisissez — jamais de prélèvement surprise.</p></div></div>
       </details>
       <details>
-        <summary>Comment Oxyne Z protège-t-il mon entreprise ? <span class="plus">+</span></summary>
-        <div class="faq-a"><div><p>Il surveille les fausses pages, les faux comptes et les usages frauduleux de votre numéro sur les réseaux sociaux. S'il détecte une usurpation, il réunit les preuves et prépare le signalement — mais n'envoie rien sans votre accord explicite.</p></div></div>
+        <summary>Comment Oxyne Z protège mon nom ? <span class="plus">+</span></summary>
+        <div class="faq-a"><div><p>Il surveille fausses pages, faux comptes et usages frauduleux de votre numéro. Il prépare le signalement, mais n'envoie rien sans votre accord.</p></div></div>
       </details>
       <details>
-        <summary>Mes conversations sont-elles mélangées avec celles d'autres entreprises ? <span class="plus">+</span></summary>
-        <div class="faq-a"><div><p>Jamais. Chaque entreprise a son propre environnement, totalement cloisonné : vos clients, vos messages et vos données ne croisent jamais ceux d'un autre commerçant.</p></div></div>
+        <summary>Mes données sont-elles mélangées à d'autres ? <span class="plus">+</span></summary>
+        <div class="faq-a"><div><p>Jamais. Chaque entreprise a son propre environnement, totalement cloisonné.</p></div></div>
       </details>
     </div>
   </div>
@@ -706,21 +811,20 @@ footer::before{content:""; position:absolute; inset:0;
     <div class="foot-grid">
       <div>
         <a class="logo" href="#">Aelyra <span class="x">×</span> Oxyne <span class="z">Z</span></a>
-        <p>Vos clients accueillis. Votre nom protégé.<br>La réceptionniste IA des entreprises, par DIGITALE BUSINESSE.</p>
+        <p>Vos clients accueillis. Votre nom protégé.<br>Par DIGITALE BUSINESSE.</p>
         <div class="foot-num">05-95-53-28-84</div>
       </div>
       <div>
         <h4>Le service</h4>
         <a href="#service">Comment ça marche</a>
+        <a href="#pourqui">Pour qui</a>
         <a href="#oxyne">Oxyne Z</a>
         <a href="#tarifs">Tarifs</a>
-        <a href="#faq">FAQ</a>
       </div>
       <div>
         <h4>Entreprise</h4>
         <a href="#">DIGITALE BUSINESSE</a>
         <a href="#">Nous contacter</a>
-        <a href="#">Conditions d'utilisation</a>
         <a href="#">Confidentialité</a>
       </div>
     </div>
@@ -817,7 +921,6 @@ async function chatLoop(){
     t = typingBubble('aelyra'); await sleep(T(1500)); t.remove();
     msgAelyra('Bonjour ! Bienvenue au Salon Kadi Coiffure. Que puis-je faire pour vous ?', '09:44');
     await sleep(T(4200));
-    // fondu de sortie puis recommence
     Array.prototype.forEach.call(chat.children, function(c){
       c.style.transition = 'opacity .5s'; c.style.opacity = '0';
     });
@@ -825,6 +928,20 @@ async function chatLoop(){
   }
 }
 chatLoop();
+
+/* ---------- bandeau photo : parallaxe au scroll (JS, pas background-attachment) ---------- */
+var pbImg = document.getElementById('pbImg'), photoBand = document.getElementById('photoBand');
+function parallax(){
+  var r = photoBand.getBoundingClientRect(), vh = window.innerHeight;
+  if(r.bottom < 0 || r.top > vh) return;
+  var p = (r.top + r.height / 2 - vh / 2) / vh; /* -0.5 … 0.5 */
+  pbImg.style.transform = 'translateY(' + (p * -18).toFixed(2) + 'vh)';
+}
+if(!reduceMotion){
+  window.addEventListener('scroll', parallax, {passive:true});
+  window.addEventListener('resize', parallax);
+  parallax();
+}
 
 /* ---------- téléphone : inclinaison 3D qui suit la souris ---------- */
 var tilt = document.getElementById('phoneTilt'),
@@ -847,7 +964,7 @@ if(!reduceMotion){
   })();
 }
 
-/* ---------- révélations + compteurs + dessin SVG ---------- */
+/* ---------- révélations + dessin SVG ---------- */
 var io = new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(!e.isIntersecting) return;
@@ -855,25 +972,10 @@ var io = new IntersectionObserver(function(entries){
     elr.classList.add('in');
     elr.querySelectorAll('.step .ico').forEach(function(ico){ ico.classList.add('drawn'); });
     if(elr.classList.contains('step')){ var ic = elr.querySelector('.ico'); if(ic) ic.classList.add('drawn'); }
-    elr.querySelectorAll('[data-count]').forEach(animateCount);
     io.unobserve(elr);
   });
 }, {threshold: 0.18});
 document.querySelectorAll('.reveal').forEach(function(elr){ io.observe(elr); });
-
-function animateCount(node){
-  if(node.dataset.done) return; node.dataset.done = '1';
-  var target = parseInt(node.dataset.count, 10), dur = 1400, t0 = null;
-  if(reduceMotion){ node.textContent = target; return; }
-  function frame(t){
-    if(!t0) t0 = t;
-    var p = Math.min((t - t0) / dur, 1),
-        e = 1 - Math.pow(1 - p, 3);
-    node.textContent = Math.round(target * e);
-    if(p < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
 
 /* ---------- Oxyne Z : canvas de particules ---------- */
 (function particles(){
@@ -917,7 +1019,17 @@ function animateCount(node){
   })();
 })();
 
-/* ---------- tarifs : tilt 3D ---------- */
+/* ---------- Oxyne Z : lueur douce qui suit le curseur ---------- */
+var oxyneSec = document.querySelector('.oxyne'), oxGlow = document.getElementById('oxGlow');
+if(oxyneSec && oxGlow && !reduceMotion){
+  oxyneSec.addEventListener('mousemove', function(e){
+    var r = oxyneSec.getBoundingClientRect();
+    oxGlow.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(2) + '%');
+    oxGlow.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(2) + '%');
+  });
+}
+
+/* ---------- tarifs : tilt 3D + reflet holographique Premium ---------- */
 document.querySelectorAll('[data-tilt]').forEach(function(card){
   if(reduceMotion) return;
   card.addEventListener('mousemove', function(e){
@@ -926,9 +1038,13 @@ document.querySelectorAll('[data-tilt]').forEach(function(card){
         py = (e.clientY - r.top) / r.height - 0.5;
     card.style.transform = 'perspective(900px) rotateY(' + (px * 7).toFixed(2) +
       'deg) rotateX(' + (-py * 7).toFixed(2) + 'deg) translateY(-4px)';
+    if(card.hasAttribute('data-holo')){
+      card.style.setProperty('--hx', ((px + 0.5) * 100).toFixed(2) + '%');
+      card.style.setProperty('--hy', ((py + 0.5) * 100).toFixed(2) + '%');
+    }
   });
   card.addEventListener('mouseleave', function(){
-    card.style.transition = 'transform .5s cubic-bezier(.2,.7,.2,1.2)';
+    card.style.transition = 'transform .5s cubic-bezier(0.22,1,0.36,1)';
     card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
     setTimeout(function(){ card.style.transition = ''; }, 500);
   });
