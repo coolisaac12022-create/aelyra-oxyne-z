@@ -30,7 +30,7 @@ get_header();
       </div>
       <div class="mark-card rv rv-d2">
         <svg width="150" height="86" viewBox="0 0 150 86" fill="none" aria-hidden="true">
-          <path class="wavepath" d="M8 46 C 26 18, 40 18, 52 42 C 62 62, 74 62, 84 42 C 96 18, 112 18, 142 40" stroke="#C96F3F" stroke-width="7" stroke-linecap="round"/>
+          <path class="wavepath" d="M8 46 C 26 18, 40 18, 52 42 C 62 62, 74 62, 84 42 C 96 18, 112 18, 142 40" stroke="#C9A227" stroke-width="7" stroke-linecap="round"/>
           <circle class="wavedot" cx="75" cy="40" r="7.5" fill="#1C1A17"/>
         </svg>
         <div class="wordmark">AELYRA</div>
